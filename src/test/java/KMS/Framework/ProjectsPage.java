@@ -5,12 +5,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ProjectsPage extends Pages{
-    private WebDriver driver;
-
     @FindBy(css = "[name='search']")
     private WebElement searchField;
 
@@ -45,13 +42,13 @@ public class ProjectsPage extends Pages{
     }
 
     private void clickOnSearchButton(WebDriver driver) {
-        Utilities.waitForElementByLocator(driver, By.cssSelector(".search-button"));
+        Utilities.waitAfterElementToBeDisplayed(driver, By.cssSelector(".search-button"), 10);
 
         searchButton.click();
     }
 
     private void typeInSearchField(WebDriver driver, String searchFor) {
-        Utilities.waitForElementByLocator(driver, By.cssSelector("[name='search']"));
+        Utilities.waitAfterElementToBeDisplayed(driver, By.cssSelector("[name='search']"), 10);
 
         searchField.sendKeys(searchFor);
     }
@@ -62,34 +59,34 @@ public class ProjectsPage extends Pages{
     }
 
     private void clickOnAddNewProjectButton(WebDriver driver) {
-        Utilities.waitForElementByLocator(driver, By.cssSelector("a.new-project-button"));
+        Utilities.waitAfterElementToBeDisplayed(driver, By.cssSelector("a.new-project-button"), 10);
 
         addNewProjectButton.click();
     }
 
     private void completeProjectNameFieldForANewProject(WebDriver driver, String projectName) {
-        Utilities.waitForElementByLocator(driver, By.cssSelector("[name='project_name']"));
+        Utilities.waitAfterElementToBeDisplayed(driver, By.cssSelector("[name='project_name']"), 10);
 
         projectNameField.clear();
         projectNameField.sendKeys(projectName);
     }
 
     private void completeEMFieldForANewProject(WebDriver driver, String EM) {
-        Utilities.waitForElementByLocator(driver, By.cssSelector("[name='project_em']"));
+        Utilities.waitAfterElementToBeDisplayed(driver, By.cssSelector("[name='project_em']"), 10);
 
         EMfield.clear();
         EMfield.sendKeys(EM);
     }
 
     private void completeDoEFieldForANewProject(WebDriver driver, String DoE) {
-        Utilities.waitForElementByLocator(driver, By.cssSelector("[name='project_Doe']"));
+        Utilities.waitAfterElementToBeDisplayed(driver, By.cssSelector("[name='project_Doe']"), 10);
 
         DoEField.clear();
         DoEField.sendKeys(DoE);
     }
 
     private void completeClientFieldForANewProject(WebDriver driver, String client) {
-        Utilities.waitForElementByLocator(driver, By.cssSelector("[name='project_client']"));
+        Utilities.waitAfterElementToBeDisplayed(driver, By.cssSelector("[name='project_client']"), 10);
 
         clientField.clear();
         clientField.sendKeys(client);
@@ -103,13 +100,13 @@ public class ProjectsPage extends Pages{
     }
 
     private void clickOnSaveButtonForANewProject(WebDriver driver) {
-        Utilities.waitForElementByLocator(driver, By.cssSelector("main > div > div > div > div > button:nth-child(2)"));
+        Utilities.waitAfterElementToBeDisplayed(driver, By.cssSelector("main > div > div > div > div > button:nth-child(2)"), 10);
 
         saveButton.click();
     }
 
     private void clickOnCancelButtonForANewProject(WebDriver driver) {
-        Utilities.waitForElementByLocator(driver, By.cssSelector("main > div > div > div > div > button:nth-child(1)"));
+        Utilities.waitAfterElementToBeDisplayed(driver, By.cssSelector("main > div > div > div > div > button:nth-child(1)"), 10);
 
         cancelButton.click();
     }
@@ -127,15 +124,17 @@ public class ProjectsPage extends Pages{
     }
 
     public boolean returnIfAProjectExists(WebDriver driver, String projectName) {
+        Utilities.waitAfterElementToBeDisplayed(driver, By.xpath("//div[@class='project-name']"), 5, true);
 
         List<WebElement> listOfProjects = driver.findElements(By.xpath("//div[@class='project-name']"));
 
-        for(int i = 0; i < listOfProjects.size(); i++) {
-            return (listOfProjects.get(i).getText().contains(projectName) && listOfProjects.size() == 1);
+        if (listOfProjects.size() != 0) {
+            for (int i = 0; i <= listOfProjects.size(); i++) {
+                return (listOfProjects.get(i).getText().contains(projectName) && listOfProjects.size() == 1);
+            }
         }
 
         return false;
-
     }
 
 }

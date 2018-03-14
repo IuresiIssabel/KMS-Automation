@@ -12,6 +12,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 public class Utilities {
@@ -62,4 +63,19 @@ public class Utilities {
             System.out.println("error when switching to a tab");
         }
     }
+
+    public static String getRandomString() {
+        String SALTCHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+        StringBuilder salt = new StringBuilder();
+        Random rnd = new Random();
+
+        while (salt.length() < 8) { // length of the random string.
+            int index = (int) (rnd.nextFloat() * SALTCHARS.length());
+            salt.append(SALTCHARS.charAt(index));
+        }
+
+        String saltStr = "TestAuto".concat(salt.toString());
+        return saltStr;
+    }
+
 }
