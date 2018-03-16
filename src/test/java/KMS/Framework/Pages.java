@@ -10,6 +10,8 @@ public class Pages {
     private ProjectsPage projectsPage;
     private SignInPage signInPage;
     private SignInPasswordPage signInPasswordPage;
+    private UpdateProjectPage updateProjectPage;
+    private ProjectDetailsPage projectDetailsPage;
 
     public Pages(WebDriver driver) {
         this.driver = driver;
@@ -38,6 +40,18 @@ public class Pages {
         projectsPage = PageFactory.initElements(driver, ProjectsPage.class);
 
         return projectsPage;
+    }
+
+    public UpdateProjectPage UpdateProjectPage(){
+        updateProjectPage = PageFactory.initElements(driver, UpdateProjectPage.class);
+
+        return updateProjectPage;
+    }
+
+    public ProjectDetailsPage DetailsProjectPage(){
+        projectDetailsPage = PageFactory.initElements(driver, ProjectDetailsPage.class);
+
+        return projectDetailsPage;
     }
 
 }
