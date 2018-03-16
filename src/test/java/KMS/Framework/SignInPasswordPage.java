@@ -6,7 +6,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-public class SignInPasswordPage extends Pages{
+public class SignInPasswordPage extends Pages {
     private WebDriver driver;
 
     @FindBy(css = "[name='password'")
@@ -27,14 +27,14 @@ public class SignInPasswordPage extends Pages{
         clickOnNextButtonForPassword(driver);
     }
 
-    private void typeInPasswordField(WebDriver driver, String password){
+    private void typeInPasswordField(WebDriver driver, String password) {
         Utilities.waitForElementByLocator(driver, By.cssSelector("[name='password'"));
 
         passwordField.clear();
         passwordField.sendKeys(password);
     }
 
-    private ProjectsPage clickOnNextButtonForPassword(WebDriver driver){
+    private ProjectsPage clickOnNextButtonForPassword(WebDriver driver) {
         Utilities.waitAfterElementToBeDisplayed(driver, By.id("passwordNext"), 10);
 
         nextButton.click();

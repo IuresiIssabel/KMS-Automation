@@ -99,5 +99,4 @@ public class UpdateProjectPage extends Pages {
         saveButton.click();
     }
 
-
 }

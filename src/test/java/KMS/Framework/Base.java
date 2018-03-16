@@ -10,7 +10,6 @@ import org.testng.annotations.BeforeMethod;
 
 public class Base {
     protected static WebDriver driver;
-    Pages pages;
 
     @BeforeMethod
     public void setUp() {
@@ -18,30 +17,30 @@ public class Base {
         DesiredCapabilities capability = DesiredCapabilities.chrome();
         Platform desiredPlatform = Platform.ANY;
 
-        if (osName.contains("windows")){
+        if (osName.contains("windows")) {
             desiredPlatform = Platform.WINDOWS;
-        } else if(osName.contains("mac")) {
+        } else if (osName.contains("mac")) {
             desiredPlatform = Platform.MAC;
         }
         capability.setPlatform(desiredPlatform);
 
-        if (capability.getPlatform().is(Platform.WINDOWS)){
+        if (capability.getPlatform().is(Platform.WINDOWS)) {
             System.setProperty("webdriver.chrome.driver", "src/test/resources/chromedriver.exe");
-        }else{
+        } else {
             System.setProperty("webdriver.chrome.driver", "/Users/issabel.iuresi/Downloads/SimpleExample/src/test/resources/chromedriver");
         }
         driver = new ChromeDriver();
         driver.get("http://dev.kms.3pillar.corp:8000/login");
 
-        pages = PageFactory.initElements(driver, Pages.class);
+        Pages pages = PageFactory.initElements(driver, Pages.class);
 
         pages.SignInPage().clickOnSignInButton();
-        pages.SignInUserPage().completeEmailField(driver,"kms-auto");
-        pages.SignInPasswordPage().completePasswordField(driver,"Leverpoint456!");
+        pages.SignInUserPage().completeEmailField(driver, "kms-auto");
+        pages.SignInPasswordPage().completePasswordField(driver, "Leverpoint456!");
     }
 
     @AfterMethod
-    public void tearDown(){
+    public void tearDown() {
         driver.close();
         driver.quit();
     }

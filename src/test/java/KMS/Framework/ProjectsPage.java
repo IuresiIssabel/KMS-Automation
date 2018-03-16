@@ -7,7 +7,7 @@ import org.openqa.selenium.support.FindBy;
 
 import java.util.List;
 
-public class ProjectsPage extends Pages{
+public class ProjectsPage extends Pages {
     @FindBy(css = "[name='search']")
     private static WebElement searchField;
 
@@ -20,7 +20,7 @@ public class ProjectsPage extends Pages{
     @FindBy(css = ".update-project-button")
     private static WebElement updateProjectButton;
 
-    public ProjectsPage(WebDriver driver){
+    public ProjectsPage(WebDriver driver) {
         super(driver);
 
         Utilities.waitForElementByLocator(driver, By.cssSelector("[name='search']"));
@@ -38,7 +38,7 @@ public class ProjectsPage extends Pages{
         searchField.sendKeys(searchFor);
     }
 
-    public static void searchForAProject(WebDriver driver, String projectName){
+    public static void searchForAProject(WebDriver driver, String projectName) {
         typeInSearchField(driver, projectName);
         clickOnSearchButton(driver);
     }

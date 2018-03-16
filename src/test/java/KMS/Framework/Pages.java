@@ -4,54 +4,35 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
 
 public class Pages {
-    private WebDriver driver;
-
-    private SignInUserPage signInUserPage;
-    private ProjectsPage projectsPage;
-    private SignInPage signInPage;
-    private SignInPasswordPage signInPasswordPage;
-    private UpdateProjectPage updateProjectPage;
-    private ProjectDetailsPage projectDetailsPage;
+    private final WebDriver driver;
 
     public Pages(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
     }
 
-    public SignInPage SignInPage(){
-        signInPage = PageFactory.initElements(driver, SignInPage.class);
-
-        return signInPage;
+    public SignInPage SignInPage() {
+        return PageFactory.initElements(driver, SignInPage.class);
     }
 
-    public SignInUserPage SignInUserPage(){
-        signInUserPage = PageFactory.initElements(driver, SignInUserPage.class);
-
-        return signInUserPage;
+    public SignInUserPage SignInUserPage() {
+        return PageFactory.initElements(driver, SignInUserPage.class);
     }
 
     public SignInPasswordPage SignInPasswordPage() {
-        signInPasswordPage = PageFactory.initElements(driver, SignInPasswordPage.class);
-
-        return signInPasswordPage;
+        return PageFactory.initElements(driver, SignInPasswordPage.class);
     }
 
-    public ProjectsPage ProjectsPage(){
-        projectsPage = PageFactory.initElements(driver, ProjectsPage.class);
-
-        return projectsPage;
+    public ProjectsPage ProjectsPage() {
+        return PageFactory.initElements(driver, ProjectsPage.class);
     }
 
-    public UpdateProjectPage UpdateProjectPage(){
-        updateProjectPage = PageFactory.initElements(driver, UpdateProjectPage.class);
-
-        return updateProjectPage;
+    public UpdateProjectPage UpdateProjectPage() {
+        return PageFactory.initElements(driver, UpdateProjectPage.class);
     }
 
-    public ProjectDetailsPage DetailsProjectPage(){
-        projectDetailsPage = PageFactory.initElements(driver, ProjectDetailsPage.class);
-
-        return projectDetailsPage;
+    public ProjectDetailsPage DetailsProjectPage() {
+        return PageFactory.initElements(driver, ProjectDetailsPage.class);
     }
 
 }

@@ -33,7 +33,7 @@ public class Utilities {
     public static void waitAfterElementToBeDisplayed(WebDriver driver, final By locator, int timeWait, boolean... forceSleep) {
         WebDriverWait wait = new WebDriverWait(driver, timeWait);
         try {
-            if (forceSleep != null && forceSleep.length > 0 && forceSleep[0] == true){
+            if (forceSleep != null && forceSleep.length > 0 && forceSleep[0]) {
                 Thread.sleep(2000);
             }
             wait.until(new ExpectedCondition<WebElement>() {
@@ -49,17 +49,17 @@ public class Utilities {
         }
     }
 
-    public static void switchToSpecificTab(WebDriver driver, int windowNumber){
+    public static void switchToSpecificTab(WebDriver driver, int windowNumber) {
         List<String> handles = new ArrayList<>(driver.getWindowHandles());
-        if (handles.size() > 0){
+        if (handles.size() > 0) {
             switchToHandle(driver, handles.get(windowNumber));
         }
     }
 
-    private static void switchToHandle(WebDriver driver, String handle){
-        try{
+    private static void switchToHandle(WebDriver driver, String handle) {
+        try {
             driver.switchTo().window(handle);
-        }catch(Exception e){
+        } catch (Exception e) {
             System.out.println("error when switching to a tab");
         }
     }
@@ -74,8 +74,7 @@ public class Utilities {
             salt.append(SALTCHARS.charAt(index));
         }
 
-        String saltStr = "TestAuto".concat(salt.toString());
-        return saltStr;
+        return "TestAuto".concat(salt.toString());
     }
 
 }

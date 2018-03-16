@@ -5,7 +5,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-public class SignInUserPage extends Pages{
+public class SignInUserPage extends Pages {
     private WebDriver driver;
 
     @FindBy(id = "identifierId")
@@ -14,7 +14,7 @@ public class SignInUserPage extends Pages{
     @FindBy(id = "identifierNext")
     private WebElement nextButtonForEmail;
 
-    public SignInUserPage(WebDriver driver){
+    public SignInUserPage(WebDriver driver) {
         super(driver);
 
         Utilities.switchToSpecificTab(driver, 1);
