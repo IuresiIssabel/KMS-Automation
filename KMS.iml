@@ -33,5 +33,6 @@
     <orderEntry type="library" scope="TEST" name="Maven: org.yaml:snakeyaml:1.15" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.beanshell:bsh:2.0b4" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.seleniumhq.selenium:selenium-support:2.53.1" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: commons-lang:commons-lang:2.5" level="project" />
   </component>
 </module>
