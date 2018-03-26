@@ -22,5 +22,13 @@ public class SignInPage extends Page {
         Wait.waitAfterElementToBeDisplayed(driver, By.cssSelector("#googleSignIn"), 10);
 
         signInButton.click();
+
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+//        Wait.waitAfterElementToBeDisplayed(driver, By.id("identifierId"), 10);
     }
 }

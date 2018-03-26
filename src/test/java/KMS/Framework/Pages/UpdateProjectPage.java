@@ -20,8 +20,11 @@ public class UpdateProjectPage extends Page {
     @FindBy(css = "[name='project_client']")
     private WebElement clientField;
 
-    @FindBy(css = "main > div > div > div > div > button:nth-child(2)")
+    @FindBy(xpath = "//span[text()='Save']")
     private WebElement saveButton;
+
+    @FindBy(css = "main > div > div > div > div > button:nth-child(2)")
+    private WebElement saveToHistoryButton;
 
     @FindBy(css = "main > div > div > div > div > button:nth-child(1)")
     private WebElement cancelButton;
@@ -66,9 +69,15 @@ public class UpdateProjectPage extends Page {
     }
 
     private void clickOnSaveButton() {
-        Wait.waitAfterElementToBeDisplayed(driver, By.cssSelector("main > div > div > div > div > button:nth-child(2)"), 10);
+        Wait.waitAfterElementToBeDisplayed(driver, By.xpath("//span[text()='Save']"), 10);
 
         saveButton.click();
+    }
+
+    private void clickOnSaveToHistoryButton() {
+        Wait.waitAfterElementToBeDisplayed(driver, By.cssSelector("main > div > div > div > div > button:nth-child(2)"), 10);
+
+        saveToHistoryButton.click();
     }
 
     private void clickOnCancelButton() {

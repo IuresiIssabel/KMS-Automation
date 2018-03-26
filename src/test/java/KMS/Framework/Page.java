@@ -6,7 +6,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
 
 public class Page extends Base{
-    protected WebDriver driver;
+    protected final WebDriver driver;
 
     public Page(WebDriver driver) {
         this.driver = driver;

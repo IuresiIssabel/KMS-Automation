@@ -8,6 +8,7 @@ import org.testng.annotations.Test;
 
 public class ProjectsTests extends BaseTests {
     private Page pages;
+//            = new Page(driver);
 
     @Test
     public void searchForAProject() {

@@ -13,7 +13,7 @@ public class BaseTests {
     static WebDriver driver;
 
     @BeforeMethod
-    public void setUp() {
+    public void setUp1() {
         String osName = System.getProperty("os.name").toLowerCase();
         DesiredCapabilities capability = DesiredCapabilities.chrome();
         Platform desiredPlatform = Platform.ANY;
@@ -30,12 +30,14 @@ public class BaseTests {
         } else {
             System.setProperty("webdriver.chrome.driver", "/Users/issabel.iuresi/IdeaProjects/KMS/src/test/resources/chromedriver");
         }
+
         driver = new ChromeDriver();
         driver.get("http://dev.kms.3pillar.corp:8000/login");
-
 //        driver.get("http://kms.3pillar.corp/");
+    }
 
-
+    @BeforeMethod
+    public  void setUp2() {
         Page pages = PageFactory.initElements(driver, Page.class);
 
         pages.SignInPage().clickOnSignInButton();
