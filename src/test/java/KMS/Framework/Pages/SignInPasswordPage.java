@@ -1,13 +1,11 @@
 package KMS.Framework.Pages;
 
 import KMS.Framework.Page;
-import KMS.Framework.Utilities.Base;
 import KMS.Framework.Utilities.Wait;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 
 public class SignInPasswordPage extends Page {
 
@@ -19,9 +17,6 @@ public class SignInPasswordPage extends Page {
 
     public SignInPasswordPage(WebDriver driver) {
         super(driver);
-
-        Base.switchToSpecificTab(driver, 1);
-        Wait.waitForElementByLocator(driver, By.cssSelector("[name='password'"));
     }
 
     public void completePasswordField(String password) {
@@ -40,9 +35,6 @@ public class SignInPasswordPage extends Page {
         Wait.waitAfterElementToBeDisplayed(driver, By.id("passwordNext"), 10);
 
         nextButton.click();
-
-        Base.switchToSpecificTab(driver, 0);
-        PageFactory.initElements(driver, ProjectsPage.class);
     }
 
 }

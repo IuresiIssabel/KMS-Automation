@@ -33,16 +33,18 @@ public class BaseTests {
 
         driver = new ChromeDriver();
         driver.get("http://dev.kms.3pillar.corp:8000/login");
-//        driver.get("http://kms.3pillar.corp/");
     }
 
     @BeforeMethod
-    public  void setUp2() {
+    public void setUp2() {
         Page pages = PageFactory.initElements(driver, Page.class);
 
         pages.SignInPage().clickOnSignInButton();
         pages.SignInUserPage().completeEmailField("kms-auto");
-        pages.SignInPasswordPage().completePasswordField( "Leverpoint456!");
+        pages.SignInPasswordPage().completePasswordField("Leverpoint456!");
+        driver.switchTo().window("");
+        driver.navigate().refresh();
+        pages.SignInPage().clickOnSignInButton();
     }
 
     @AfterMethod

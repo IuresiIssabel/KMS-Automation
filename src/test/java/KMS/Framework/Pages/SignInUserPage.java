@@ -38,5 +38,11 @@ public class SignInUserPage extends Page {
         Wait.waitAfterElementToBeDisplayed(driver, By.id("identifierNext"), 10);
 
         nextButtonForEmail.click();
+
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }
