@@ -1,11 +1,11 @@
 package KMS.Framework;
 
 import KMS.Framework.Pages.*;
-import KMS.Framework.Utilities.Base;
+import KMS.Framework.Utilities.BasePage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
 
-public class Page extends Base{
+public class Page extends BasePage {
     protected final WebDriver driver;
 
     public Page(WebDriver driver) {

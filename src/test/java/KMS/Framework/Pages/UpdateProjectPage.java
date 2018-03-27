@@ -96,9 +96,13 @@ public class UpdateProjectPage extends Page {
         clickOnCancelButton();
     }
 
-    public void updateAProject(String newProjectName, String EM, String DoE, String client) {
-        completeProjectNameField( newProjectName);
+    public void updateAndSaveAProject(String newProjectName, String EM, String DoE, String client) {
+        completeProjectNameField(newProjectName);
         clickOnSaveButton();
     }
 
+    public void updateAndSaveToHistoryAProject(String newProjectName, String EM, String DoE, String client) {
+        completeProjectNameField(newProjectName);
+        clickOnSaveToHistoryButton();
+    }
 }

@@ -23,6 +23,9 @@ public class ProjectsPage extends Page {
     @FindBy(css = ".update-project-button")
     private static WebElement updateProjectButton;
 
+    @FindBy(xpath = "//a[contains(text(),'No results')]")
+    private WebElement noResultsFoundText;
+
     public ProjectsPage(WebDriver driver) {
         super(driver);
 
@@ -58,15 +61,24 @@ public class ProjectsPage extends Page {
         updateProjectButton.click();
     }
 
-    public boolean returnIfAProjectExists(String projectName) {
-        Wait.waitAfterElementToBeDisplayed(driver, By.xpath("//div[@class='project-name']"), 5, true);
+    private int returnIfListOfProjectsIsEmpty() {
+        return driver.findElements(By.xpath("//a[contains(text(),'No results found !')]")).size();
+    }
 
-        List<WebElement> listOfProjects = driver.findElements(By.xpath("//div[@class='project-name']"));
+    public boolean returnIfProjectExists(String projectName) {
 
-        if (listOfProjects.size() != 0) {
-            for (int i = 0; i <= listOfProjects.size(); i++) {
-                return (listOfProjects.get(i).getText().contains(projectName) && listOfProjects.size() == 1);
-            }
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        if (returnIfListOfProjectsIsEmpty() == 0) {
+            Wait.waitAfterElementToBeDisplayed(driver, By.xpath("//div[@class='project-name']"), 5, true);
+
+            List<WebElement> listOfProjects = driver.findElements(By.xpath("//div[@class='project-name']"));
+
+            return listOfProjects.size() == 1 && listOfProjects.get(0).getText().contains(projectName);
         }
 
         return false;

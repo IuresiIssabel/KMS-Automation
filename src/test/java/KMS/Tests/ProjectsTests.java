@@ -1,12 +1,12 @@
 package KMS.Tests;
 
 import KMS.Framework.Page;
-import KMS.Framework.Utilities.Base;
+import KMS.Framework.Utilities.BasePage;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-public class ProjectsTests extends BaseTests {
+public class ProjectsTests extends BaseTest {
     private Page pages;
 //            = new Page(driver);
 
@@ -16,37 +16,37 @@ public class ProjectsTests extends BaseTests {
 
         pages.ProjectsPage().searchForAProject("Berkeley Fit");
 
-        Assert.assertEquals(pages.ProjectsPage().returnIfAProjectExists("Berkeley Fit"), true);
+        Assert.assertEquals(pages.ProjectsPage().returnIfProjectExists("Berkeley Fit"), true);
     }
 
     @Test
     public void createAndSaveNewProject() {
-        String projectName = Base.getRandomString();
+        String projectName = BasePage.getRandomString();
         pages = PageFactory.initElements(driver, Page.class);
 
         pages.ProjectsPage().clickOnAddNewProjectButton();
         pages.UpdateProjectPage().createAndSaveNewProject(projectName, "Test", "Test", "Test");
         pages.ProjectsPage().searchForAProject(projectName);
 
-        Assert.assertEquals(pages.ProjectsPage().returnIfAProjectExists(projectName), true);
+        Assert.assertEquals(pages.ProjectsPage().returnIfProjectExists(projectName), true);
     }
 
     @Test
     public void createAndCancelNewProject() {
-        String projectName = Base.getRandomString();
+        String projectName = BasePage.getRandomString();
         pages = PageFactory.initElements(driver, Page.class);
 
         pages.ProjectsPage().clickOnAddNewProjectButton();
         pages.UpdateProjectPage().createAndCancelNewProject(projectName, "Test", "Test", "Test");
         pages.ProjectsPage().searchForAProject(projectName);
 
-        Assert.assertEquals(pages.ProjectsPage().returnIfAProjectExists(projectName), false);
+        Assert.assertEquals(pages.ProjectsPage().returnIfProjectExists(projectName), false);
     }
 
     @Test
-    public void createSearchAndUpdateAProject() {
-        String projectName = Base.getRandomString();
-        String newProjectName = Base.getRandomString();
+    public void createSearchUpdateAndSaveAProject() {
+        String projectName = BasePage.getRandomString();
+        String newProjectName = BasePage.getRandomString();
 
         pages = PageFactory.initElements(driver, Page.class);
 
@@ -55,10 +55,28 @@ public class ProjectsTests extends BaseTests {
         pages.ProjectsPage().searchForAProject(projectName);
 
         pages.ProjectsPage().clickOnUpdateProjectButton();
-        pages.UpdateProjectPage().updateAProject(newProjectName, "Test", "Test", "Test");
+        pages.UpdateProjectPage().updateAndSaveAProject(newProjectName, "Test", "Test", "Test");
         pages.ProjectsPage().searchForAProject(newProjectName);
 
-        Assert.assertEquals(pages.ProjectsPage().returnIfAProjectExists(newProjectName), true);
+        Assert.assertEquals(pages.ProjectsPage().returnIfProjectExists(newProjectName), true);
+    }
+
+    @Test
+    public void createSearchUpdateAndSaveToHistoryAProject() {
+        String projectName = BasePage.getRandomString();
+        String newProjectName = BasePage.getRandomString();
+
+        pages = PageFactory.initElements(driver, Page.class);
+
+        pages.ProjectsPage().clickOnAddNewProjectButton();
+        pages.UpdateProjectPage().createAndSaveNewProject(projectName, "Test", "Test", "Test");
+        pages.ProjectsPage().searchForAProject(projectName);
+
+        pages.ProjectsPage().clickOnUpdateProjectButton();
+        pages.UpdateProjectPage().updateAndSaveToHistoryAProject(newProjectName, "Test", "Test", "Test");
+        pages.ProjectsPage().searchForAProject(newProjectName);
+
+        Assert.assertEquals(pages.ProjectsPage().returnIfProjectExists(newProjectName), true);
     }
 
     @Test

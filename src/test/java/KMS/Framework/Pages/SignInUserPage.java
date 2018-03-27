@@ -1,7 +1,7 @@
 package KMS.Framework.Pages;
 
 import KMS.Framework.Page;
-import KMS.Framework.Utilities.Base;
+import KMS.Framework.Utilities.BasePage;
 import KMS.Framework.Utilities.Wait;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -18,7 +18,7 @@ public class SignInUserPage extends Page {
     public SignInUserPage(WebDriver driver) {
         super(driver);
 
-        Base.switchToSpecificTab(driver, 1);
+        BasePage.switchToSpecificTab(driver, 1);
         Wait.waitForElementByLocator(driver, By.cssSelector("#identifierId"));
     }
 

@@ -9,7 +9,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 
-public class BaseTests {
+public class BaseTest {
     static WebDriver driver;
 
     @BeforeMethod

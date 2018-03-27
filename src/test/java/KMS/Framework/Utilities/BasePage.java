@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class Base {
+public class BasePage {
 
     public static void switchToSpecificTab(WebDriver driver, int windowNumber) {
         List<String> handles = new ArrayList<>(driver.getWindowHandles());

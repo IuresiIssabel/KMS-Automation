@@ -28,7 +28,6 @@ public class SignInPage extends Page {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
-//        Wait.waitAfterElementToBeDisplayed(driver, By.id("identifierId"), 10);
     }
+
 }
