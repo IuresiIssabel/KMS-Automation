@@ -1,15 +1,20 @@
 package KMS.Framework.Pages;
 
-import KMS.Framework.Page;
-import KMS.Framework.Utilities.Wait;
+import KMS.Framework.Core.WebDrivers;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.testng.Assert;
 
 import java.util.List;
 
-public class ProjectsPage extends Page {
+public class ProjectsPage extends WebDrivers {
+
+    public ProjectsPage(WebDriver driver) {
+        this.driver = driver;
+    }
 
     @FindBy(css = "[name='search']")
     private static WebElement searchField;
@@ -23,65 +28,31 @@ public class ProjectsPage extends Page {
     @FindBy(css = ".update-project-button")
     private static WebElement updateProjectButton;
 
-    @FindBy(xpath = "//a[contains(text(),'No results')]")
-    private WebElement noResultsFoundText;
+    @FindBy(xpath = "//div[@class='project-name']")
+    private static WebElement projectNameElement;
 
-    public ProjectsPage(WebDriver driver) {
-        super(driver);
-
-        Wait.waitForElementByLocator(driver, By.cssSelector("[name='search']"));
-    }
-
-    private void clickOnSearchButton() {
-        Wait.waitAfterElementToBeDisplayed(driver, By.cssSelector(".search-button"), 10);
-
+    public void searchForAProject(String searchFor) {
+        longWait().until(ExpectedConditions.visibilityOf((WebElement) searchField));
+        searchField.sendKeys(searchFor);
         searchButton.click();
     }
 
-    private void typeInSearchField(String searchFor) {
-        Wait.waitAfterElementToBeDisplayed(driver, By.cssSelector("[name='search']"), 10);
-
-        searchField.sendKeys(searchFor);
-    }
-
-    public void searchForAProject(String projectName) {
-        typeInSearchField(projectName);
-        clickOnSearchButton();
+    public void verifyThatIsOnlyOneProject() {
+        longWait().until(ExpectedConditions.visibilityOf((WebElement) By.xpath(String.valueOf(projectNameElement))));
+        List<WebElement> listOfProjects = driver.findElements(By.xpath(String.valueOf(projectNameElement)));
+        for (WebElement projectName : listOfProjects) {
+            String berkeleyProject = projectName.getText();
+            Assert.assertEquals(berkeleyProject, "Berkeley Fit");
+        }
     }
 
     public void clickOnAddNewProjectButton() {
-        Wait.waitAfterElementToBeDisplayed(driver, By.cssSelector("a.new-project-button"), 10);
 
         addNewProjectButton.click();
     }
 
     public void clickOnUpdateProjectButton() {
-        Wait.waitAfterElementToBeDisplayed(driver, By.cssSelector(".update-project-button"), 10);
-
+        longWait().until(ExpectedConditions.elementToBeClickable((WebElement) updateProjectButton));
         updateProjectButton.click();
     }
-
-    private int returnIfListOfProjectsIsEmpty() {
-        return driver.findElements(By.xpath("//a[contains(text(),'No results found !')]")).size();
-    }
-
-    public boolean returnIfProjectExists(String projectName) {
-
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        if (returnIfListOfProjectsIsEmpty() == 0) {
-            Wait.waitAfterElementToBeDisplayed(driver, By.xpath("//div[@class='project-name']"), 5, true);
-
-            List<WebElement> listOfProjects = driver.findElements(By.xpath("//div[@class='project-name']"));
-
-            return listOfProjects.size() == 1 && listOfProjects.get(0).getText().contains(projectName);
-        }
-
-        return false;
-    }
-
 }

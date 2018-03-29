@@ -1,15 +1,15 @@
 package KMS.Framework.Pages;
 
-import KMS.Framework.Page;
-import KMS.Framework.Utilities.Wait;
-import org.openqa.selenium.By;
+import KMS.Framework.Core.WebDrivers;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
-public class ProjectDetailsPage extends Page {
+public class ProjectDetailsPage extends WebDrivers {
+
     public ProjectDetailsPage(WebDriver driver) {
-        super(driver);
+        this.driver = driver;
     }
 
     @FindBy(css = ".project-details-button")
@@ -20,14 +20,11 @@ public class ProjectDetailsPage extends Page {
 
 
     public void clickOnProjectDetailsButton() {
-        Wait.waitAfterElementToBeDisplayed(driver, By.cssSelector(".project-details-button"), 10);
-
+        longWait().until(ExpectedConditions.elementToBeClickable((WebElement) projectDetailsButton));
         projectDetailsButton.click();
     }
 
     public boolean verifyIfStabilityMetricIsDisplayed() {
-        Wait.waitAfterElementToBeDisplayed(driver, By.xpath("//div[contains(text(),'Stability')]"), 10);
-
         return stabilityMetricLabel.isDisplayed();
     }
 }
