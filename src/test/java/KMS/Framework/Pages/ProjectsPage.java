@@ -20,7 +20,7 @@ public class ProjectsPage extends WebDrivers {
     private static WebElement searchField;
 
     @FindBy(css = ".search-button")
-    private static WebElement searchButton;
+    protected static WebElement searchButton;
 
     @FindBy(css = "a.new-project-button")
     private static WebElement addNewProjectButton;
@@ -29,7 +29,7 @@ public class ProjectsPage extends WebDrivers {
     private static WebElement updateProjectButton;
 
     @FindBy(xpath = "//div[@class='project-name']")
-    private static WebElement projectNameElement;
+    protected static WebElement projectNameElement;
 
     public void searchForAProject(String searchFor) {
         longWait().until(ExpectedConditions.visibilityOf((WebElement) searchField));
@@ -41,8 +41,8 @@ public class ProjectsPage extends WebDrivers {
         longWait().until(ExpectedConditions.visibilityOf((WebElement) By.xpath(String.valueOf(projectNameElement))));
         List<WebElement> listOfProjects = driver.findElements(By.xpath(String.valueOf(projectNameElement)));
         for (WebElement projectName : listOfProjects) {
-            String berkeleyProject = projectName.getText();
-            Assert.assertEquals(berkeleyProject, "Berkeley Fit");
+            String kmsAutomationProject = projectName.getText();
+            Assert.assertEquals(kmsAutomationProject, "KMS-Automation");
         }
     }
 

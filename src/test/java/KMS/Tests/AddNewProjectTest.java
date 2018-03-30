@@ -8,14 +8,7 @@ import KMS.Framework.Pages.UpdateProjectPage;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.annotations.Test;
 
-public class ProjectsTests extends TestBase {
-
-    @Test
-    public void searchForAProject() {
-        ProjectsPage projectsPage = PageFactory.initElements(driver, ProjectsPage.class);
-        projectsPage.searchForAProject("Berkeley Fit");
-//        projectsPage.verifyThatIsOnlyOneProject();
-    }
+public class AddNewProjectTest extends TestBase {
 
     @Test
     public void createAndSaveNewProject() {
@@ -69,10 +62,14 @@ public class ProjectsTests extends TestBase {
         ProjectsPage projectsPage = PageFactory.initElements(driver, ProjectsPage.class);
         ProjectDetailsPage detailsPage = PageFactory.initElements(driver, ProjectDetailsPage.class);
 
-        projectsPage.searchForAProject("Berkeley Fit");
+        projectsPage.searchForAProject("KMS-Automation");
         detailsPage.clickOnProjectDetailsButton();
+        detailsPage.verifyIfStabilityMetricIsDisplayed();
+    }
 
-//        Assert.assertEquals(pages.DetailsProjectPage().verifyIfStabilityMetricIsDisplayed(), true);
+    @Test
+    public void searc() {
+
     }
 
 }
