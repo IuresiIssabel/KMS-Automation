@@ -33,6 +33,7 @@ public class UpdateProjectPage extends WebDrivers {
         AddNewProjectsPage addNewProjectsPage = PageFactory.initElements(driver, AddNewProjectsPage.class);
 
         addNewProjectsPage.completeProjectNameField(newProjectName);
+        addNewProjectsPage.prefillAllProjectFields();
         addNewProjectsPage.clickOnSaveButton();
     }
 
@@ -40,6 +41,7 @@ public class UpdateProjectPage extends WebDrivers {
         AddNewProjectsPage addNewProjectsPage = PageFactory.initElements(driver, AddNewProjectsPage.class);
 
         addNewProjectsPage.completeProjectNameField(newProjectName);
+        addNewProjectsPage.prefillAllProjectFields();
         addNewProjectsPage.clickOnCancelButton();
     }
 

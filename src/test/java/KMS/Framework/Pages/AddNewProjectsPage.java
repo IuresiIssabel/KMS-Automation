@@ -1,11 +1,16 @@
 package KMS.Framework.Pages;
 
 import KMS.Framework.Core.WebDrivers;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
+
+import java.util.List;
+import java.util.Random;
 
 public class AddNewProjectsPage extends WebDrivers {
 
@@ -33,6 +38,15 @@ public class AddNewProjectsPage extends WebDrivers {
 
     @FindBy(css = "main > div > div > div > div > button:nth-child(1)")
     private WebElement cancelButton;
+
+    @FindBy(xpath = "//input[@class='commentField']")
+    private WebElement commentFieldElement;
+
+    @FindBy(xpath = "//input[@type='number' and following-sibling::div/text()='%']")
+    private WebElement metricValueGoalInputForPercentage;
+
+    @FindBy(xpath = "//input[@type='number' and following-sibling::div/text()='min.']")
+    private WebElement metricValueGoalInputForMinutes;
 
     protected void completeProjectNameField(String projectName) {
         projectNameField.clear();
@@ -65,6 +79,16 @@ public class AddNewProjectsPage extends WebDrivers {
         saveButton.click();
     }
 
+    public void createAndCancelNewProject(String projectName, String EM, String DoE, String client) {
+        completeMandatoryFieldsForNewProject(projectName, EM, DoE, client);
+        prefillAllProjectFields();
+        clickOnCancelButton();
+    }
+
+    protected void clickOnCancelButton() {
+        cancelButton.click();
+    }
+
     public void verifyTheCreatedProjectsData(String EM, String DoE, String client) {
         Assert.assertEquals(EM, "Test EM");
         Assert.assertEquals(DoE, "Test DoE");
@@ -78,15 +102,80 @@ public class AddNewProjectsPage extends WebDrivers {
 
     public void createAndSaveNewProject(String projectName, String EM, String DoE, String client) {
         completeMandatoryFieldsForNewProject(projectName, EM, DoE, client);
+        prefillAllProjectFields();
         clickOnSaveButton();
     }
 
-    public void createAndCancelNewProject(String projectName, String EM, String DoE, String client) {
-        completeMandatoryFieldsForNewProject(projectName, EM, DoE, client);
-        clickOnCancelButton();
+    public void prefillAllProjectFields() {
+        prefillCommentFields();
+        prefillMetricInput("//input[@type='number' and following-sibling::div/text()='%']", 100);
+        prefillMetricInput("//input[@type='number' and following-sibling::div/text()='min.']", 100);
+        changeOptionsInMetricDropdowns(
+                "//select[contains(@name, 'score_')]",
+                "score",
+                6);
+        changeOptionsInMetricDropdowns(
+                "//select[contains(@name, 'value_')]",
+                "value",
+                1);
+        changeOptionsInMetricDropdowns(
+                "//select[contains(@name, 'goal_')]",
+                "goal",
+                1);
     }
 
-    protected void clickOnCancelButton() {
-        cancelButton.click();
+    private void prefillCommentFields() {
+        List<WebElement> commentField = driver.findElements(By.xpath("//input[@class='commentField']"));
+        int n = 1;
+        for (WebElement prefillCommentField : commentField) {
+            int number = n++;
+            prefillCommentField.sendKeys("Comment " + number);
+        }
+    }
+
+    private void prefillMetricInput(String elementInput, int maxNumber) {
+        List<WebElement> metricInputElement = driver.findElements(By.xpath(elementInput));
+        for (WebElement prefillInput : metricInputElement) {
+            prefillInput.clear();
+            Random rand = new Random();
+            int number = rand.nextInt(maxNumber);
+            prefillInput.sendKeys("" + number);
+            try {
+                Thread.sleep(150);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void changeOptionsInMetricDropdowns(String elementInput, String metricColumn, int maxNumber) {
+        List<WebElement> metricInputElement = driver.findElements(By.xpath(elementInput));
+        for (WebElement prefillInput : metricInputElement) {
+            Random rand = new Random();
+            int number = rand.nextInt(maxNumber);
+            prefillInput.sendKeys(
+                    "//select[contains(@name, '"+ metricColumn +"_')]/option[@value='"+ number +"']");
+            try {
+                Thread.sleep(150);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void createKMSAutomationProject() {
+        ProjectPage projectPage = PageFactory.initElements(driver, ProjectPage.class);
+        String kmsAutomationName = "KMS-Automation";
+
+        projectPage.searchField.sendKeys(kmsAutomationName);
+        projectPage.searchButton.click();
+        WebElement projectName = driver.findElement(By.xpath(String.valueOf(projectPage.kmsAtProjectName)));
+        if (!projectName.isDisplayed()) {
+            clickOnAddNewProjectButton();
+            createAndSaveNewProject(kmsAutomationName, "Test EM", "Test DoE", "Test client");
+            projectPage.searchForAProject(kmsAutomationName);
+        }
+
+        projectPage.searchField.clear();
     }
 }

@@ -5,7 +5,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 
@@ -23,7 +22,7 @@ public class ProjectPage extends WebDrivers {
     protected static WebElement searchButton;
 
     @FindBy(css = "[name='search']")
-    private static WebElement searchField;
+    protected static WebElement searchField;
 
     @FindBy(xpath = "//div[@class='project-name']")
     protected static WebElement projectNameElement;
@@ -115,6 +114,12 @@ public class ProjectPage extends WebDrivers {
     @FindBy(xpath = "//button[text()='Close']")
     private static WebElement closteCommentsTab;
 
+    @FindBy(xpath = "//a[text()='No results found !']")
+    protected static WebElement noResultFoundMessage;
+
+    @FindBy(xpath = "//div[text()='KMS-Automation']")
+    protected static WebElement kmsAtProjectName;
+
     public void searchForAProject(String searchFor) {
         longWait().until(ExpectedConditions.visibilityOf((WebElement) searchField));
         searchField.sendKeys(searchFor);
@@ -130,7 +135,7 @@ public class ProjectPage extends WebDrivers {
             if (numberOfProjects == 1 && projectTitle.equals(theNameOfTheProject)) {
                 Assert.assertEquals(projectTitle, theNameOfTheProject);
             } else {
-                String noResultFound = driver.findElement(By.xpath("//a[text()='No results found !']")).getText();
+                String noResultFound = driver.findElement(By.xpath(String.valueOf(noResultFoundMessage))).getText();
                 Assert.assertEquals(noResultFound, "No results found !");
             }
         }

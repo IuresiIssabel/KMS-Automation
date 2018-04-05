@@ -1,9 +1,12 @@
 package KMS.Framework.Pages;
 
 import KMS.Framework.Core.WebDrivers;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class LoginInUserPage extends WebDrivers {
 
@@ -35,16 +38,14 @@ public class LoginInUserPage extends WebDrivers {
     public void typeInEmailField(String emailValue) {
         emailField.sendKeys(emailValue);
         nextButton.click();
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+
+        longWait().until(ExpectedConditions.visibilityOf(passwordField));
     }
 
     public void typeInPasswordField(String passwordValue) {
         passwordField.sendKeys(passwordValue);
         nextButton.click();
+        
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
