@@ -20,7 +20,9 @@ public class AddNewProjectTest extends TestBase {
         addNewProjectsPage.createAndSaveNewProject(
                 projectName, "Test EM", "Test DoE", "Test client");
         projectPage.searchForAProject(projectName);
-
+        projectPage.verifyMainMetricTitles();
+        projectPage.verifyMetricNames();
+        projectPage.verifyCommentsTab();
     }
 
     @Test

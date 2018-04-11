@@ -8,7 +8,9 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.testng.Assert.assertTrue;
 
@@ -51,8 +53,8 @@ public class ProjectPage extends WebDrivers {
     @FindBy(className = "drop-down-list")
     private static WebElement soryByDropDown;
 
-//    @FindBy(xpath = "//div[text()='%s']")
-//    private static WebElement projectMetricTitle;
+    @FindBy(xpath = "//div[text()='%s']")
+    private static WebElement projectMetricTitle;
 
     @FindBy(xpath = "//div[text()='Uptime percentage']")
     private static WebElement uptimePercentageMetric;
@@ -120,6 +122,21 @@ public class ProjectPage extends WebDrivers {
     @FindBy(xpath = "//div[text()='KMS-Automation']")
     protected static WebElement kmsAtProjectName;
 
+    @FindBy(xpath = "//div[contains(text(),'Stability')]")
+    private WebElement stabilityMetricLabel;
+
+    @FindBy(xpath = "//div[contains(text(),'Maintenance')]")
+    private WebElement maintenanceMetricLabel;
+
+    @FindBy(xpath = "//div[contains(text(),'Delivery_efficiency')]")
+    private WebElement deliveryEfficiencyMetricLabel;
+
+    @FindBy(xpath = "//div[contains(text(),'Performance')]")
+    private WebElement perfomanceMetricLabel;
+
+    @FindBy(xpath = "//div[contains(text(),'Security')]")
+    private WebElement securityMetricLabel;
+
     public void searchForAProject(String searchFor) {
         longWait().until(ExpectedConditions.visibilityOf((WebElement) searchField));
         searchField.sendKeys(searchFor);
@@ -175,14 +192,33 @@ public class ProjectPage extends WebDrivers {
         String projectTitle = projectNameElement.getText();
 
         Assert.assertEquals(projectTitle, "KMS-Automation");
-        verifyMetricTitles();
+        verifyMetricNames();
     }
 
-    public void verifyMetricTitles() {
+    public void verifyMainMetricTitles() {
+        longWait().until(ExpectedConditions.visibilityOf((WebElement) stabilityMetricLabel));
+
+        HashMap<WebElement, String> metricTitles = new HashMap<>();
+        metricTitles.put(stabilityMetricLabel, "STABILITY");
+        metricTitles.put(maintenanceMetricLabel, "MAINTENANCE");
+        metricTitles.put(deliveryEfficiencyMetricLabel, "DELIVERY_EFFICIENCY");
+        metricTitles.put(perfomanceMetricLabel, "PERFORMANCE");
+        metricTitles.put(securityMetricLabel, "SECURITY");
+
+        for (Map.Entry<WebElement, String> entry : metricTitles.entrySet()) {
+            String stabilityText = entry.getKey().getText();
+            Assert.assertEquals(stabilityText, entry.getValue());
+        }
+    }
+
+    public void verifyMetricNames() {
+        longWait().until(ExpectedConditions.visibilityOf((WebElement) stabilityMetricLabel));
+
         WebElement[] metricTitle = {
-                uptimePercentageMetric, productionOpenCloseRateMetric, applicationCrashRateMetric, maintainabilityIndexMetric,
-                automaticProvisioningMetric, configurabilityMetric, installationDocumentationMetric, standardChecklistForDeploymentMetric,
-                neededDowntimeMetric, deploymentTimeMetric, sprintCommitmentCompletionMetric, checklistMetric, guildlineAvailableMetric
+                uptimePercentageMetric, productionOpenCloseRateMetric, applicationCrashRateMetric,
+                maintainabilityIndexMetric, automaticProvisioningMetric, configurabilityMetric,
+                installationDocumentationMetric, standardChecklistForDeploymentMetric, neededDowntimeMetric,
+                deploymentTimeMetric, sprintCommitmentCompletionMetric, checklistMetric, guildlineAvailableMetric
         };
 
         for (WebElement verifyTitles : metricTitle) {
@@ -196,13 +232,14 @@ public class ProjectPage extends WebDrivers {
 //                "Needed downtime", "Deployment time", "Sprint commitment completion", "Checklist", "Guidline available"
 //        };
 //        for (String verifyTitles : metricTitle) {
-//            Assert.assertEquals(projectMetricTitle, verifyTitles);
+//            String metricTitleGetText = driver.findElement(By.xpath("//div[text()='"+ metricTitle +"']")).getText();
+//            Assert.assertEquals(metricTitleGetText, verifyTitles);
 //        }
     }
 
-    //Todo verify each comment inside the comment section tab
-
     public void verifyCommentsTab() {
+        longWait().until(ExpectedConditions.visibilityOf((WebElement) stabilityMetricLabel));
+
         WebElement[] metricsCommentButton = {
                 stabilityCommentsButton, maintenanceCommentsButton, deliveryEfficiencyCommentsButton,
                 performanceCommentsButton, securityCommentsButton
@@ -212,7 +249,17 @@ public class ProjectPage extends WebDrivers {
             commentsSection.click();
             longWait().until(ExpectedConditions.visibilityOf((WebElement) commentsTabTitle));
             assertTrue(commentsTabTitle.isDisplayed());
+            verifyMetricComments();
             closteCommentsTab.click();
+        }
+    }
+
+    private void verifyMetricComments() {
+        List<WebElement> metricComments = driver.findElements(By.xpath(
+                "//div[./div/div/text()='COMMENT']//div[contains(text(), 'Comment')]"));
+
+        for (WebElement nameOfTheComments : metricComments) {
+            nameOfTheComments.isDisplayed();
         }
     }
 }
