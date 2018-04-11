@@ -154,7 +154,7 @@ public class AddNewProjectsPage extends WebDrivers {
             Random rand = new Random();
             int number = rand.nextInt(maxNumber);
             prefillInput.sendKeys(
-                    "//select[contains(@name, '"+ metricColumn +"_')]/option[@value='"+ number +"']");
+                    "//select[contains(@name, '" + metricColumn + "_')]/option[@value='" + number + "']");
             try {
                 Thread.sleep(150);
             } catch (InterruptedException e) {
@@ -167,15 +167,13 @@ public class AddNewProjectsPage extends WebDrivers {
         ProjectPage projectPage = PageFactory.initElements(driver, ProjectPage.class);
         String kmsAutomationName = "KMS-Automation";
 
-        projectPage.searchField.sendKeys(kmsAutomationName);
-        projectPage.searchButton.click();
-        WebElement projectName = driver.findElement(By.xpath(String.valueOf(projectPage.kmsAtProjectName)));
-        if (!projectName.isDisplayed()) {
+        projectPage.searchForAProject(kmsAutomationName);
+        WebElement noResultFoundMsg = driver.findElement(By.xpath("//a[text()='No results found !']"));
+
+        if (noResultFoundMsg != null && noResultFoundMsg.isDisplayed()) {
             clickOnAddNewProjectButton();
             createAndSaveNewProject(kmsAutomationName, "Test EM", "Test DoE", "Test client");
             projectPage.searchForAProject(kmsAutomationName);
         }
-
-        projectPage.searchField.clear();
     }
 }

@@ -23,8 +23,8 @@ public class TestBase extends WebDrivers {
             Thread.sleep(1000);
             driver.navigate().refresh();
             logIn.clickOnSignInButton();
-//            AddNewProjectsPage addNewProjectsPage = PageFactory.initElements(driver, AddNewProjectsPage.class);
-//            addNewProjectsPage.createKMSAutomationProject();
+            AddNewProjectsPage addNewProjectsPage = PageFactory.initElements(driver, AddNewProjectsPage.class);
+            addNewProjectsPage.createKMSAutomationProject();
         } catch (Exception e) {
             e.printStackTrace();
         }

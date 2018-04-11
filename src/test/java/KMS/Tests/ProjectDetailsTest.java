@@ -15,7 +15,7 @@ public class ProjectDetailsTest extends TestBase {
 
         projectPage.searchForAProject("KMS-Automation");
         detailsPage.clickOnProjectDetailsButton();
-        detailsPage.verifyIfStabilityMetricIsDisplayed();
+        detailsPage.verifyIfMetricTitlesAreDisplayed();
         projectPage.verifyMetricTitles();
     }
 
@@ -26,7 +26,7 @@ public class ProjectDetailsTest extends TestBase {
 
         projectPage.searchForAProject("KMS-Automation");
         detailsPage.clickOnProjectDetailsButton();
-        detailsPage.verifyIfStabilityMetricIsDisplayed();
+        detailsPage.verifyIfMetricTitlesAreDisplayed();
         projectPage.verifyCommentsTab();
     }
 

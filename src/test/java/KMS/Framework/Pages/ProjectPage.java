@@ -125,6 +125,7 @@ public class ProjectPage extends WebDrivers {
         searchField.sendKeys(searchFor);
         searchButton.click();
         verifyThatIsOnlyOneProject(searchFor);
+        searchField.clear();
     }
 
     public void verifyThatIsOnlyOneProject(String theNameOfTheProject) {
@@ -206,6 +207,7 @@ public class ProjectPage extends WebDrivers {
                 stabilityCommentsButton, maintenanceCommentsButton, deliveryEfficiencyCommentsButton,
                 performanceCommentsButton, securityCommentsButton
         };
+
         for (WebElement commentsSection : metricsCommentButton) {
             commentsSection.click();
             longWait().until(ExpectedConditions.visibilityOf((WebElement) commentsTabTitle));
