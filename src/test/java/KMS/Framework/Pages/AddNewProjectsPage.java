@@ -75,7 +75,7 @@ public class AddNewProjectsPage extends WebDrivers {
         completeClientField(client);
     }
 
-    protected void clickOnSaveButton() {
+    public void clickOnSaveButton() {
         saveButton.click();
     }
 

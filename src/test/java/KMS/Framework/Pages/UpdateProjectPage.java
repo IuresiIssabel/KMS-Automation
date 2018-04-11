@@ -25,7 +25,8 @@ public class UpdateProjectPage extends WebDrivers {
         updateProjectButton.click();
     }
 
-    private void clickOnSaveToHistoryButton() {
+    public void clickOnSaveToHistoryButton() {
+        longWait().until(ExpectedConditions.visibilityOf((WebElement) saveToHistoryButton));
         saveToHistoryButton.click();
     }
 

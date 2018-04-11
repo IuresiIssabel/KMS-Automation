@@ -1,8 +1,10 @@
 package KMS.Tests;
 
 import KMS.Framework.Core.TestBase;
+import KMS.Framework.Pages.AddNewProjectsPage;
 import KMS.Framework.Pages.ProjectDetailsPage;
 import KMS.Framework.Pages.ProjectPage;
+import KMS.Framework.Pages.UpdateProjectPage;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.annotations.Test;
 
@@ -36,5 +38,33 @@ public class ProjectDetailsTest extends TestBase {
         projectPage.searchForAProject("KMS-Automation");
         detailsPage.clickOnProjectDetailsButton();
         projectPage.verifyCommentsTab();
+    }
+
+    @Test
+    public void goToProjectDetailsAndVerifyDataHistoryTableHeader(){
+        ProjectDetailsPage detailsPage = PageFactory.initElements(driver, ProjectDetailsPage.class);
+        ProjectPage projectPage = PageFactory.initElements(driver, ProjectPage.class);
+        UpdateProjectPage updateProjectPage = PageFactory.initElements(driver, UpdateProjectPage.class);
+
+        projectPage.searchForAProject("KMS-Automation");
+        updateProjectPage.clickOnUpdateProjectButton();
+        updateProjectPage.clickOnSaveToHistoryButton();
+        detailsPage.clickOnProjectDetailsButton();
+        detailsPage.verifyDataHistoryColumnHeader();
+    }
+
+    @Test
+    public void goToProjectDetailsAndVerifyDataHistoryInformation(){
+        ProjectDetailsPage detailsPage = PageFactory.initElements(driver, ProjectDetailsPage.class);
+        ProjectPage projectPage = PageFactory.initElements(driver, ProjectPage.class);
+        UpdateProjectPage updateProjectPage = PageFactory.initElements(driver, UpdateProjectPage.class);
+        AddNewProjectsPage addNewProjectsPage = PageFactory.initElements(driver, AddNewProjectsPage.class);
+
+        projectPage.searchForAProject("KMS-Automation");
+        updateProjectPage.clickOnUpdateProjectButton();
+        updateProjectPage.clickOnSaveToHistoryButton();
+        addNewProjectsPage.clickOnSaveButton();
+        detailsPage.clickOnProjectDetailsButton();
+        detailsPage.verifyDataHistoryColumnInfo();
     }
 }
