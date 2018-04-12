@@ -15,7 +15,7 @@ public class ProjectDetailsTest extends TestBase {
         ProjectDetailsPage detailsPage = PageFactory.initElements(driver, ProjectDetailsPage.class);
         ProjectPage projectPage = PageFactory.initElements(driver, ProjectPage.class);
 
-        projectPage.searchForAProject("KMS-Automation");
+        projectPage.searchForAProject(data.getKmsAutoProjectName());
         detailsPage.clickOnProjectDetailsButton();
         projectPage.verifyMainMetricTitles();
     }
@@ -25,7 +25,7 @@ public class ProjectDetailsTest extends TestBase {
         ProjectDetailsPage detailsPage = PageFactory.initElements(driver, ProjectDetailsPage.class);
         ProjectPage projectPage = PageFactory.initElements(driver, ProjectPage.class);
 
-        projectPage.searchForAProject("KMS-Automation");
+        projectPage.searchForAProject(data.getKmsAutoProjectName());
         detailsPage.clickOnProjectDetailsButton();
         projectPage.verifyMetricNames();
     }
@@ -35,7 +35,7 @@ public class ProjectDetailsTest extends TestBase {
         ProjectDetailsPage detailsPage = PageFactory.initElements(driver, ProjectDetailsPage.class);
         ProjectPage projectPage = PageFactory.initElements(driver, ProjectPage.class);
 
-        projectPage.searchForAProject("KMS-Automation");
+        projectPage.searchForAProject(data.getKmsAutoProjectName());
         detailsPage.clickOnProjectDetailsButton();
         projectPage.verifyCommentsTab();
     }
@@ -46,9 +46,10 @@ public class ProjectDetailsTest extends TestBase {
         ProjectPage projectPage = PageFactory.initElements(driver, ProjectPage.class);
         UpdateProjectPage updateProjectPage = PageFactory.initElements(driver, UpdateProjectPage.class);
 
-        projectPage.searchForAProject("KMS-Automation");
+        projectPage.searchForAProject(data.getKmsAutoProjectName());
         updateProjectPage.clickOnUpdateProjectButton();
         updateProjectPage.clickOnSaveToHistoryButton();
+        projectPage.searchForAProject(data.getKmsAutoProjectName());
         detailsPage.clickOnProjectDetailsButton();
         detailsPage.verifyDataHistoryColumnHeader();
     }
@@ -60,7 +61,7 @@ public class ProjectDetailsTest extends TestBase {
         UpdateProjectPage updateProjectPage = PageFactory.initElements(driver, UpdateProjectPage.class);
         AddNewProjectsPage addNewProjectsPage = PageFactory.initElements(driver, AddNewProjectsPage.class);
 
-        projectPage.searchForAProject("KMS-Automation");
+        projectPage.searchForAProject(data.getKmsAutoProjectName());
         updateProjectPage.clickOnUpdateProjectButton();
         updateProjectPage.clickOnSaveToHistoryButton();
         addNewProjectsPage.clickOnSaveButton();

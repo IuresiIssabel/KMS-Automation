@@ -18,14 +18,14 @@ public class ProjectPageTest extends TestBase {
     public void searchForAProject() {
         ProjectPage projectPage = PageFactory.initElements(driver, ProjectPage.class);
 
-        projectPage.searchForAProject("KMS-Automation");
+        projectPage.searchForAProject(data.getKmsAutoProjectName());
     }
 
     @Test
     public void searchForAProjectAndVerifyItsElements() {
         ProjectPage projectPage = PageFactory.initElements(driver, ProjectPage.class);
 
-        projectPage.searchForAProject("KMS-Automation");
+        projectPage.searchForAProject(data.getKmsAutoProjectName());
         projectPage.verifyProjectsElements();
         projectPage.verifyCommentsTab();
     }

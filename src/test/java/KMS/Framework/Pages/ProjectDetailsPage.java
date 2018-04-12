@@ -53,6 +53,9 @@ public class ProjectDetailsPage extends WebDrivers {
     @FindBy(xpath = "//div[./div/div/div/p/text()='Day']/following-sibling::div//p")
     private WebElement dataHistoryDayColumn;
 
+    @FindBy(xpath = "//span[contains(./img/@src, 'image/png')]")
+    private WebElement uploadProjectLogoButton;
+
     public void clickOnProjectDetailsButton() {
         longWait().until(ExpectedConditions.elementToBeClickable((WebElement) projectDetailsButton));
         projectDetailsButton.click();
@@ -63,21 +66,21 @@ public class ProjectDetailsPage extends WebDrivers {
         HashMap<WebElement, String> dataHistoryColumnHeaders = new HashMap<>();
 
         dataHistoryColumnHeaders.put
-                (dataHistoryDayColumnHeader, "Day");
+                (dataHistoryDayColumnHeader, data.getColumn1());
         dataHistoryColumnHeaders.put
-                (dataHistoryOverallScoreColumnHeader, "Overall Score");
+                (dataHistoryOverallScoreColumnHeader, data.getColumn2());
         dataHistoryColumnHeaders.put
-                (dataHistoryStabilityColumnHeader, "Stability");
+                (dataHistoryStabilityColumnHeader, data.getColumn3());
         dataHistoryColumnHeaders.put
-                (dataHistoryMaintenanceColumnHeader, "Maintenance");
+                (dataHistoryMaintenanceColumnHeader, data.getColumn4());
         dataHistoryColumnHeaders.put
-                (dataHistoryDeliveryEfficiencyColumnHeader, "Delivery_efficiency");
+                (dataHistoryDeliveryEfficiencyColumnHeader, data.getColumn5());
         dataHistoryColumnHeaders.put
-                (dataHistoryPerformanceColumnHeader, "Performance");
+                (dataHistoryPerformanceColumnHeader, data.getColumn6());
         dataHistoryColumnHeaders.put
-                (dataHistorySecurityColumnHeader, "Security");
+                (dataHistorySecurityColumnHeader, data.getColumn7());
         dataHistoryColumnHeaders.put
-                (dataHistoryOptionsColumn, "Options");
+                (dataHistoryOptionsColumn, data.getColumn8());
 
         for (Map.Entry<WebElement, String> entry : dataHistoryColumnHeaders.entrySet()) {
             assertTrue(entry.getKey().isDisplayed());

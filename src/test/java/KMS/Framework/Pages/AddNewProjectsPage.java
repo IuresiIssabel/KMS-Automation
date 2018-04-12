@@ -90,9 +90,9 @@ public class AddNewProjectsPage extends WebDrivers {
     }
 
     public void verifyTheCreatedProjectsData(String EM, String DoE, String client) {
-        Assert.assertEquals(EM, "Test EM");
-        Assert.assertEquals(DoE, "Test DoE");
-        Assert.assertEquals(client, "Test client");
+        Assert.assertEquals(EM, data.getEMField());
+        Assert.assertEquals(DoE, data.getDoEField());
+        Assert.assertEquals(client, data.getClientField());
     }
 
     public void clickOnAddNewProjectButton() {
@@ -108,20 +108,24 @@ public class AddNewProjectsPage extends WebDrivers {
 
     public void prefillAllProjectFields() {
         prefillCommentFields();
-        prefillMetricInput("//input[@type='number' and following-sibling::div/text()='%']", 100);
-        prefillMetricInput("//input[@type='number' and following-sibling::div/text()='min.']", 100);
+        prefillMetricInput(
+                "//input[@type='number' and following-sibling::div/text()='%']",
+                data.getMetricValueGoalMinutesAndPercentageNr());
+        prefillMetricInput(
+                "//input[@type='number' and following-sibling::div/text()='min.']",
+                data.getMetricValueGoalMinutesAndPercentageNr());
         changeOptionsInMetricDropdowns(
                 "//select[contains(@name, 'score_')]",
                 "score",
-                6);
+                data.getMetricScoreDropdownMaxNr());
         changeOptionsInMetricDropdowns(
                 "//select[contains(@name, 'value_')]",
                 "value",
-                1);
+                data.getMetricValueDropdownMaxNr());
         changeOptionsInMetricDropdowns(
                 "//select[contains(@name, 'goal_')]",
                 "goal",
-                1);
+                data.getMetricGoalDropdownMaxNr());
     }
 
     private void prefillCommentFields() {
@@ -129,7 +133,7 @@ public class AddNewProjectsPage extends WebDrivers {
         int n = 1;
         for (WebElement prefillCommentField : commentField) {
             int number = n++;
-            prefillCommentField.sendKeys("Comment " + number);
+            prefillCommentField.sendKeys(data.getCommentField() + number);
         }
     }
 
@@ -165,15 +169,14 @@ public class AddNewProjectsPage extends WebDrivers {
 
     public void createKMSAutomationProject() {
         ProjectPage projectPage = PageFactory.initElements(driver, ProjectPage.class);
-        String kmsAutomationName = "KMS-Automation";
 
-        projectPage.searchForAProject(kmsAutomationName);
+        projectPage.searchForAProject(data.getKmsAutoProjectName());
         WebElement noResultFoundMsg = driver.findElement(By.xpath("//a[text()='No results found !']"));
 
         if (noResultFoundMsg != null && noResultFoundMsg.isDisplayed()) {
             clickOnAddNewProjectButton();
-            createAndSaveNewProject(kmsAutomationName, "Test EM", "Test DoE", "Test client");
-            projectPage.searchForAProject(kmsAutomationName);
+            createAndSaveNewProject(data.getKmsAutoProjectName(), data.getEMField(), data.getDoEField(), data.getClientField());
+            projectPage.searchForAProject(data.getKmsAutoProjectName());
         }
     }
 }

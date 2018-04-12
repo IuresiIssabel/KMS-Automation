@@ -11,14 +11,14 @@ public class TestBase extends WebDrivers {
     public void setUp() {
         try {
             rootInit();
-            getDriver().get("http://dev.kms.3pillar.corp:8000");
+            getDriver().get(data.getBaseUrl());
             Thread.sleep(1000);
             LoginInUserPage logIn = PageFactory.initElements(driver, LoginInUserPage.class);
             String winHandleBefore = driver.getWindowHandle();
             logIn.clickOnSignInButton();
             WebDrivers.switchToSpecificTab(driver, 1);
-            logIn.typeInEmailField("kms-auto");
-            logIn.typeInPasswordField("Leverpoint456!");
+            logIn.typeInEmailField();
+            logIn.typeInPasswordField();
             driver.switchTo().window(winHandleBefore);
             Thread.sleep(1000);
             driver.navigate().refresh();

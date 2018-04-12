@@ -33,15 +33,15 @@ public class LoginInUserPage extends WebDrivers {
         }
     }
 
-    public void typeInEmailField(String emailValue) {
-        emailField.sendKeys(emailValue);
+    public void typeInEmailField() {
+        emailField.sendKeys(data.getUsername());
         nextButton.click();
 
         longWait().until(ExpectedConditions.visibilityOf(passwordField));
     }
 
-    public void typeInPasswordField(String passwordValue) {
-        passwordField.sendKeys(passwordValue);
+    public void typeInPasswordField() {
+        passwordField.sendKeys(data.getPassword());
         nextButton.click();
         
         try {

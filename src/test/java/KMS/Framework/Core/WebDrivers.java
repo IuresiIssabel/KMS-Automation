@@ -13,15 +13,20 @@ import java.io.IOException;
 import java.util.*;
 
 public class WebDrivers {
+    public WebDriver driver;
+    public PropertiesReader data;
     public static final int FIND_WAIT = 15;
     public static final int LONG_WAIT = 30;
-    public WebDriver driver;
     protected static final ThreadLocal<RemoteWebDriver> THREAD_LOCAL_DRIVER = new InheritableThreadLocal<>();
     private static final ThreadLocal<WebDriverWait> THREAD_LOCAL_FIND_WAIT = new InheritableThreadLocal<>();
     protected static final ThreadLocal<WebDriverWait> THREAD_LOCAL_LONG_WAIT = new InheritableThreadLocal<>();
     private static ChromeDriverService chromeService;
     protected String browser;
     private static final ThreadLocal<String> WINDOW_HANDLE = new InheritableThreadLocal<>();
+
+    public WebDrivers() {
+        data = new PropertiesReader();
+    }
 
     private void startChromeService() {
         if (chromeService == null) {
@@ -105,7 +110,6 @@ public class WebDrivers {
             int index = (int) (rnd.nextFloat() * SALTCHARS.length());
             salt.append(SALTCHARS.charAt(index));
         }
-
         return "TestAuto".concat(salt.toString());
     }
 

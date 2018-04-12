@@ -11,14 +11,14 @@ public class AddNewProjectTest extends TestBase {
 
     @Test
     public void createAndSaveNewProject() {
-        String projectName = WebDrivers.getRandomString();
-
         AddNewProjectsPage addNewProjectsPage = PageFactory.initElements(driver, AddNewProjectsPage.class);
         ProjectPage projectPage = PageFactory.initElements(driver, ProjectPage.class);
 
+        String projectName = WebDrivers.getRandomString();
+
         addNewProjectsPage.clickOnAddNewProjectButton();
         addNewProjectsPage.createAndSaveNewProject(
-                projectName, "Test EM", "Test DoE", "Test client");
+                projectName, data.getEMField(), data.getDoEField(), data.getClientField());
         projectPage.searchForAProject(projectName);
         projectPage.verifyMainMetricTitles();
         projectPage.verifyMetricNames();
@@ -27,14 +27,14 @@ public class AddNewProjectTest extends TestBase {
 
     @Test
     public void createAndCancelNewProject() {
-        String projectName = WebDrivers.getRandomString();
-
         AddNewProjectsPage addNewProjectsPage = PageFactory.initElements(driver, AddNewProjectsPage.class);
         ProjectPage projectPage = PageFactory.initElements(driver, ProjectPage.class);
 
+        String projectName = WebDrivers.getRandomString();
+
         addNewProjectsPage.clickOnAddNewProjectButton();
         addNewProjectsPage.createAndCancelNewProject(
-                projectName, "Test EM", "Test DoE", "Test client");
+                projectName, data.getEMField(), data.getDoEField(), data.getClientField());
         projectPage.searchForAProject(projectName);
     }
 }

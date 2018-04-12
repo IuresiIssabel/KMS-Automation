@@ -154,7 +154,7 @@ public class ProjectPage extends WebDrivers {
                 Assert.assertEquals(projectTitle, theNameOfTheProject);
             } else {
                 String noResultFound = driver.findElement(By.xpath(String.valueOf(noResultFoundMessage))).getText();
-                Assert.assertEquals(noResultFound, "No results found !");
+                Assert.assertEquals(noResultFound, data.getNoResultFoundMessage());
             }
         }
     }
@@ -191,19 +191,20 @@ public class ProjectPage extends WebDrivers {
         longWait().until(ExpectedConditions.visibilityOf((WebElement) projectNameElement));
         String projectTitle = projectNameElement.getText();
 
-        Assert.assertEquals(projectTitle, "KMS-Automation");
+        Assert.assertEquals(projectTitle, data.getKmsAutoProjectName());
         verifyMetricNames();
+        verifyMainMetricTitles();
     }
 
     public void verifyMainMetricTitles() {
         longWait().until(ExpectedConditions.visibilityOf((WebElement) stabilityMetricLabel));
 
         HashMap<WebElement, String> metricTitles = new HashMap<>();
-        metricTitles.put(stabilityMetricLabel, "STABILITY");
-        metricTitles.put(maintenanceMetricLabel, "MAINTENANCE");
-        metricTitles.put(deliveryEfficiencyMetricLabel, "DELIVERY_EFFICIENCY");
-        metricTitles.put(perfomanceMetricLabel, "PERFORMANCE");
-        metricTitles.put(securityMetricLabel, "SECURITY");
+        metricTitles.put(stabilityMetricLabel, data.getMetricCategory1());
+        metricTitles.put(maintenanceMetricLabel, data.geMetricCategory2());
+        metricTitles.put(deliveryEfficiencyMetricLabel, data.getMetricCategory3());
+        metricTitles.put(perfomanceMetricLabel, data.getMetricCategory4());
+        metricTitles.put(securityMetricLabel, data.getMetricCategory5());
 
         for (Map.Entry<WebElement, String> entry : metricTitles.entrySet()) {
             String stabilityText = entry.getKey().getText();

@@ -26,8 +26,11 @@ public class UpdateProjectPage extends WebDrivers {
     }
 
     public void clickOnSaveToHistoryButton() {
+        AddNewProjectsPage addNewProjectsPage = PageFactory.initElements(driver, AddNewProjectsPage.class);
+
         longWait().until(ExpectedConditions.visibilityOf((WebElement) saveToHistoryButton));
         saveToHistoryButton.click();
+        addNewProjectsPage.clickOnSaveButton();
     }
 
     public void updateAProject(String newProjectName, String EM, String DoE, String client) {
@@ -47,8 +50,8 @@ public class UpdateProjectPage extends WebDrivers {
     }
 
     public void verifyTheUpdatedProjectsData(String EM, String DoE, String client) {
-        Assert.assertEquals(EM, "Test2 EM");
-        Assert.assertEquals(DoE, "Test2 DoE");
-        Assert.assertEquals(client, "Test2 client");
+        Assert.assertEquals(EM, data.getEMField2());
+        Assert.assertEquals(DoE, data.getDoEField2());
+        Assert.assertEquals(client, data.getClientField2());
     }
 }

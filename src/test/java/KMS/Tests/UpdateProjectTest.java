@@ -12,44 +12,44 @@ public class UpdateProjectTest extends TestBase {
 
     @Test
     public void createSearchAndUpdateAProject() {
+        AddNewProjectsPage addNewProjectsPage = PageFactory.initElements(driver, AddNewProjectsPage.class);
+        ProjectPage projectPage = PageFactory.initElements(driver, ProjectPage.class);
+        UpdateProjectPage updateProjectPage = PageFactory.initElements(driver, UpdateProjectPage.class);
+
         String projectName = WebDrivers.getRandomString();
         String newProjectName = WebDrivers.getRandomString();
 
-        AddNewProjectsPage addNewProjectsPage = PageFactory.initElements(driver, AddNewProjectsPage.class);
-        UpdateProjectPage updateProjectPage = PageFactory.initElements(driver, UpdateProjectPage.class);
-        ProjectPage projectPage = PageFactory.initElements(driver, ProjectPage.class);
-
         addNewProjectsPage.clickOnAddNewProjectButton();
         addNewProjectsPage.createAndSaveNewProject(
-                projectName, "Test EM", "Test DoE", "Test client");
+                projectName, data.getEMField(), data.getDoEField(), data.getClientField());
         projectPage.searchForAProject(projectName);
 
         updateProjectPage.clickOnUpdateProjectButton();
         updateProjectPage.updateAProject(
-                newProjectName, "Test2 EM", "Test2 DoE", "Test2 client");
+                newProjectName, data.getEMField2(), data.getDoEField2(), data.getClientField2());
         projectPage.searchForAProject(newProjectName);
         updateProjectPage.verifyTheUpdatedProjectsData(
-                "Test2 EM", "Test2 DoE", "Test2 client");
+                data.getEMField2(), data.getDoEField2(), data.getClientField2());
     }
 
     @Test
     public void createSearchAndUpdateAProjectAndCancelIt() {
+        AddNewProjectsPage addNewProjectsPage = PageFactory.initElements(driver, AddNewProjectsPage.class);
+        ProjectPage projectPage = PageFactory.initElements(driver, ProjectPage.class);
+        UpdateProjectPage updateProjectPage = PageFactory.initElements(driver, UpdateProjectPage.class);
+
         String projectName = WebDrivers.getRandomString();
         String newProjectName = WebDrivers.getRandomString();
 
-        AddNewProjectsPage addNewProjectsPage = PageFactory.initElements(driver, AddNewProjectsPage.class);
-        UpdateProjectPage updateProjectPage = PageFactory.initElements(driver, UpdateProjectPage.class);
-        ProjectPage projectPage = PageFactory.initElements(driver, ProjectPage.class);
-
         addNewProjectsPage.clickOnAddNewProjectButton();
         addNewProjectsPage.createAndSaveNewProject(
-                projectName, "Test EM", "Test DoE", "Test client");
+                projectName, data.getEMField(), data.getDoEField(), data.getClientField());
         projectPage.searchForAProject(projectName);
 
         updateProjectPage.clickOnUpdateProjectButton();
         updateProjectPage.updateAProjectAndCancelIt(
-                newProjectName, "Test2 EM", "Test2 DoE", "Test2 client");
+                newProjectName, data.getEMField2(), data.getDoEField2(), data.getClientField2());
         projectPage.searchForAProject(newProjectName);
-        addNewProjectsPage.verifyTheCreatedProjectsData("Test EM", "Test DoE", "Test client");
+        addNewProjectsPage.verifyTheCreatedProjectsData(data.getEMField(), data.getDoEField(), data.getClientField());
     }
 }
