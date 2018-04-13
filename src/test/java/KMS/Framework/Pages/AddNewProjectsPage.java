@@ -108,6 +108,7 @@ public class AddNewProjectsPage extends WebDrivers {
 
     public void prefillAllProjectFields() {
         prefillCommentFields();
+        prefillMetricScoreDropdown(data.getMetricScoreDropdownMaxNr());
         prefillMetricInput(
                 "//input[@type='number' and following-sibling::div/text()='%']",
                 data.getMetricValueGoalMinutesAndPercentageNr());
@@ -116,16 +117,28 @@ public class AddNewProjectsPage extends WebDrivers {
                 data.getMetricValueGoalMinutesAndPercentageNr());
         changeOptionsInMetricDropdowns(
                 "//select[contains(@name, 'score_')]",
-                "score",
                 data.getMetricScoreDropdownMaxNr());
         changeOptionsInMetricDropdowns(
                 "//select[contains(@name, 'value_')]",
-                "value",
                 data.getMetricValueDropdownMaxNr());
         changeOptionsInMetricDropdowns(
                 "//select[contains(@name, 'goal_')]",
-                "goal",
                 data.getMetricGoalDropdownMaxNr());
+    }
+
+    private void prefillMetricScoreDropdown(int maxNumber) {
+        List<WebElement> scoreDropDown = driver.findElements(
+                By.xpath("//div[contains(./label/text(), 'Score')]//select"));
+        for (WebElement metricScore : scoreDropDown) {
+            Random rand = new Random();
+            int number = rand.nextInt(maxNumber);
+            metricScore.sendKeys("" + number);
+            try {
+                Thread.sleep(150);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     private void prefillCommentFields() {
@@ -134,6 +147,7 @@ public class AddNewProjectsPage extends WebDrivers {
         for (WebElement prefillCommentField : commentField) {
             int number = n++;
             prefillCommentField.sendKeys(data.getCommentField() + number);
+
         }
     }
 
@@ -152,13 +166,13 @@ public class AddNewProjectsPage extends WebDrivers {
         }
     }
 
-    private void changeOptionsInMetricDropdowns(String elementInput, String metricColumn, int maxNumber) {
+    private void changeOptionsInMetricDropdowns(String elementInput, int maxNumber) {
         List<WebElement> metricInputElement = driver.findElements(By.xpath(elementInput));
         for (WebElement prefillInput : metricInputElement) {
             Random rand = new Random();
             int number = rand.nextInt(maxNumber);
             prefillInput.sendKeys(
-                    "//select[contains(@name, '" + metricColumn + "_')]/option[@value='" + number + "']");
+                    "" + number);
             try {
                 Thread.sleep(150);
             } catch (InterruptedException e) {

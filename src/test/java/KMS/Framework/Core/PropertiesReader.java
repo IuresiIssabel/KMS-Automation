@@ -46,6 +46,10 @@ public class PropertiesReader {
         return Integer.valueOf(prop.getProperty("MetricValue.GoalMinutesAndPercentageNr"));
     }
 
+    public Integer getMetricScoreDropdownNumber() {
+        return Integer.valueOf(prop.getProperty("MetricScoreDropdownNumber"));
+    }
+
     public String getKmsAutoProjectName() {
         return prop.getProperty("kmsAutoProjectName");
     }
