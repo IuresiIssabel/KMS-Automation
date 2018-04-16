@@ -111,10 +111,10 @@ public class ProjectPage extends WebDrivers {
     private static WebElement securityCommentsButton;
 
     @FindBy(xpath = "//div[text()='Comments']")
-    private static WebElement commentsTabTitle;
+    protected static WebElement commentsTabTitle;
 
     @FindBy(xpath = "//button[text()='Close']")
-    private static WebElement closteCommentsTab;
+    protected static WebElement closteCommentsTab;
 
     @FindBy(xpath = "//a[text()='No results found !']")
     protected static WebElement noResultFoundMessage;
@@ -201,14 +201,14 @@ public class ProjectPage extends WebDrivers {
 
         HashMap<WebElement, String> metricTitles = new HashMap<>();
         metricTitles.put(stabilityMetricLabel, data.getMetricCategory1());
-        metricTitles.put(maintenanceMetricLabel, data.geMetricCategory2());
+        metricTitles.put(maintenanceMetricLabel, data.getMetricCategory2());
         metricTitles.put(deliveryEfficiencyMetricLabel, data.getMetricCategory3());
         metricTitles.put(perfomanceMetricLabel, data.getMetricCategory4());
         metricTitles.put(securityMetricLabel, data.getMetricCategory5());
 
         for (Map.Entry<WebElement, String> entry : metricTitles.entrySet()) {
-            String stabilityText = entry.getKey().getText();
-            Assert.assertEquals(stabilityText, entry.getValue());
+            String getMetricLabel= entry.getKey().getText();
+            Assert.assertEquals(getMetricLabel, entry.getValue());
         }
     }
 
@@ -255,7 +255,7 @@ public class ProjectPage extends WebDrivers {
         }
     }
 
-    private void verifyMetricComments() {
+    protected void verifyMetricComments() {
         List<WebElement> metricComments = driver.findElements(By.xpath(
                 "//div[./div/div/text()='COMMENT']//div[contains(text(), 'Comment')]"));
 

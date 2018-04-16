@@ -68,4 +68,17 @@ public class ProjectDetailsTest extends TestBase {
         detailsPage.clickOnProjectDetailsButton();
         detailsPage.verifyDataHistoryColumnInfo();
     }
+
+    @Test
+    public void verifyMetricScorecardFromDataHistory() {
+        ProjectDetailsPage detailsPage = PageFactory.initElements(driver, ProjectDetailsPage.class);
+        ProjectPage projectPage = PageFactory.initElements(driver, ProjectPage.class);
+
+        projectPage.searchForAProject(data.getKmsAutoProjectName());
+        detailsPage.clickOnProjectDetailsButton();
+        detailsPage.clickOnDataHistoryDetailsButton();
+        detailsPage.verifyDataHistoryScoreCardMetricTitles();
+        detailsPage.verifyDataHistoryMetricNames();
+        detailsPage.verifyDataHistoryCommentsTab();
+    }
 }

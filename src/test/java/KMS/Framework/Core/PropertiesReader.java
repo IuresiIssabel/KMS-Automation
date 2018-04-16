@@ -94,31 +94,31 @@ public class PropertiesReader {
         return prop.getProperty("Column3");
     }
 
-    public String getColumn4() {
-        return prop.getProperty("Column4");
+    public String getMetricTitle1() {
+        return prop.getProperty("MetricTitle1");
     }
 
-    public String getColumn5() {
-        return prop.getProperty("Column5");
+    public String getMetricTitle2() {
+        return prop.getProperty("MetricTitle2");
     }
 
-    public String getColumn6() {
-        return prop.getProperty("Column6");
+    public String getMetricTitle3() {
+        return prop.getProperty("MetricTitle3");
     }
 
-    public String getColumn7() {
-        return prop.getProperty("Column7");
+    public String getMetricTitle4() {
+        return prop.getProperty("MetricTitle4");
     }
 
-    public String getColumn8() {
-        return prop.getProperty("Column8");
+    public String getMetricTitle5() {
+        return prop.getProperty("MetricTitle5");
     }
 
     public String getMetricCategory1() {
         return prop.getProperty("MetricCategory1");
     }
 
-    public String geMetricCategory2() {
+    public String getMetricCategory2() {
         return prop.getProperty("MetricCategory2");
     }
 
