@@ -34,6 +34,7 @@ public class LoginInUserPage extends WebDrivers {
     }
 
     public void typeInEmailField() {
+        longWait().until(ExpectedConditions.visibilityOf((WebElement) emailField));
         emailField.sendKeys(data.getUsername());
         nextButton.click();
 
@@ -42,9 +43,9 @@ public class LoginInUserPage extends WebDrivers {
 
     public void typeInPasswordField() {
         passwordField.sendKeys(data.getPassword());
-        nextButton.click();
-        
         try {
+            Thread.sleep(1000);
+            nextButton.click();
             Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();

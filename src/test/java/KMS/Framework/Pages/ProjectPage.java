@@ -138,7 +138,7 @@ public class ProjectPage extends WebDrivers {
     private WebElement securityMetricLabel;
 
     public void searchForAProject(String searchFor) {
-        longWait().until(ExpectedConditions.visibilityOf((WebElement) searchField));
+        longWait().until(ExpectedConditions.visibilityOf((WebElement) searchButton));
         searchField.sendKeys(searchFor);
         searchButton.click();
         verifyThatIsOnlyOneProject(searchFor);

@@ -33,8 +33,8 @@ public class AddNewProjectsPage extends WebDrivers {
     @FindBy(css = "[name='project_client']")
     private WebElement clientField;
 
-    @FindBy(xpath = "//span[text()='Save']")
-    private WebElement saveButton;
+    @FindBy(xpath = "//span[text()='Add Project']")
+    private WebElement addProjectButton;
 
     @FindBy(css = "main > div > div > div > div > button:nth-child(1)")
     private WebElement cancelButton;
@@ -75,8 +75,8 @@ public class AddNewProjectsPage extends WebDrivers {
         completeClientField(client);
     }
 
-    public void clickOnSaveButton() {
-        saveButton.click();
+    public void clickOnAddProjectButton() {
+        addProjectButton.click();
     }
 
     public void createAndCancelNewProject(String projectName, String EM, String DoE, String client) {
@@ -103,7 +103,7 @@ public class AddNewProjectsPage extends WebDrivers {
     public void createAndSaveNewProject(String projectName, String EM, String DoE, String client) {
         completeMandatoryFieldsForNewProject(projectName, EM, DoE, client);
         prefillAllProjectFields();
-        clickOnSaveButton();
+        clickOnAddProjectButton();
     }
 
     public void prefillAllProjectFields() {
@@ -145,9 +145,9 @@ public class AddNewProjectsPage extends WebDrivers {
         List<WebElement> commentField = driver.findElements(By.xpath("//input[@class='commentField']"));
         int n = 1;
         for (WebElement prefillCommentField : commentField) {
+            prefillCommentField.clear();
             int number = n++;
             prefillCommentField.sendKeys(data.getCommentField() + number);
-
         }
     }
 

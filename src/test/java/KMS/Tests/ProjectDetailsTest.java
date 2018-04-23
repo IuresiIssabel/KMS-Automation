@@ -1,7 +1,6 @@
 package KMS.Tests;
 
 import KMS.Framework.Core.TestBase;
-import KMS.Framework.Pages.AddNewProjectsPage;
 import KMS.Framework.Pages.ProjectDetailsPage;
 import KMS.Framework.Pages.ProjectPage;
 import KMS.Framework.Pages.UpdateProjectPage;
@@ -21,7 +20,7 @@ public class ProjectDetailsTest extends TestBase {
     }
 
     @Test
-    public void goToProjectDetailsAndVerifyMetricNames(){
+    public void goToProjectDetailsAndVerifyMetricNames() {
         ProjectDetailsPage detailsPage = PageFactory.initElements(driver, ProjectDetailsPage.class);
         ProjectPage projectPage = PageFactory.initElements(driver, ProjectPage.class);
 
@@ -31,7 +30,7 @@ public class ProjectDetailsTest extends TestBase {
     }
 
     @Test
-    public void goToProjectDetailsAndVerifyCommentsTab(){
+    public void goToProjectDetailsAndVerifyCommentsTab() {
         ProjectDetailsPage detailsPage = PageFactory.initElements(driver, ProjectDetailsPage.class);
         ProjectPage projectPage = PageFactory.initElements(driver, ProjectPage.class);
 
@@ -41,30 +40,38 @@ public class ProjectDetailsTest extends TestBase {
     }
 
     @Test
-    public void goToProjectDetailsAndVerifyDataHistoryTableHeader(){
+    public void publishAProjectAndVerifyDataHistory() {
+        ProjectDetailsPage detailsPage = PageFactory.initElements(driver, ProjectDetailsPage.class);
+        ProjectPage projectPage = PageFactory.initElements(driver, ProjectPage.class);
+
+        projectPage.searchForAProject(data.getKmsAutoProjectName());
+        detailsPage.clickOnProjectDetailsButton();
+        detailsPage.verifyTheProjectWasPlublishedWithSuccesInDataHistory();
+    }
+
+    @Test
+    public void goToProjectDetailsAndVerifyDataHistoryTableHeader() {
         ProjectDetailsPage detailsPage = PageFactory.initElements(driver, ProjectDetailsPage.class);
         ProjectPage projectPage = PageFactory.initElements(driver, ProjectPage.class);
         UpdateProjectPage updateProjectPage = PageFactory.initElements(driver, UpdateProjectPage.class);
 
         projectPage.searchForAProject(data.getKmsAutoProjectName());
         updateProjectPage.clickOnUpdateProjectButton();
-        updateProjectPage.clickOnSaveToHistoryButton();
+        updateProjectPage.clickOnSaveDraftButton();
         projectPage.searchForAProject(data.getKmsAutoProjectName());
         detailsPage.clickOnProjectDetailsButton();
         detailsPage.verifyDataHistoryColumnHeader();
     }
 
     @Test
-    public void goToProjectDetailsAndVerifyDataHistoryInformation(){
+    public void goToProjectDetailsAndVerifyDataHistoryInformation() {
         ProjectDetailsPage detailsPage = PageFactory.initElements(driver, ProjectDetailsPage.class);
         ProjectPage projectPage = PageFactory.initElements(driver, ProjectPage.class);
         UpdateProjectPage updateProjectPage = PageFactory.initElements(driver, UpdateProjectPage.class);
-        AddNewProjectsPage addNewProjectsPage = PageFactory.initElements(driver, AddNewProjectsPage.class);
 
         projectPage.searchForAProject(data.getKmsAutoProjectName());
         updateProjectPage.clickOnUpdateProjectButton();
-        updateProjectPage.clickOnSaveToHistoryButton();
-        addNewProjectsPage.clickOnSaveButton();
+        updateProjectPage.clickOnSaveDraftButton();
         detailsPage.clickOnProjectDetailsButton();
         detailsPage.verifyDataHistoryColumnInfo();
     }
@@ -80,5 +87,27 @@ public class ProjectDetailsTest extends TestBase {
         detailsPage.verifyDataHistoryScoreCardMetricTitles();
         detailsPage.verifyDataHistoryMetricNames();
         detailsPage.verifyDataHistoryCommentsTab();
+    }
+
+    @Test
+    public void verifyUploadProjectLogo() {
+        ProjectDetailsPage detailsPage = PageFactory.initElements(driver, ProjectDetailsPage.class);
+        ProjectPage projectPage = PageFactory.initElements(driver, ProjectPage.class);
+
+        projectPage.searchForAProject(data.getKmsAutoProjectName());
+        detailsPage.clickOnProjectDetailsButton();
+        detailsPage.verifyProjectLogo();
+        detailsPage.clickOnProjectLogoButton();
+        detailsPage.verifyProjectLogoPopupElements();
+    }
+
+    @Test
+    public void addAProjectToDataHistoryThroughHistoricalData() {
+        ProjectDetailsPage detailsPage = PageFactory.initElements(driver, ProjectDetailsPage.class);
+        ProjectPage projectPage = PageFactory.initElements(driver, ProjectPage.class);
+
+        projectPage.searchForAProject(data.getKmsAutoProjectName());
+        detailsPage.clickOnProjectDetailsButton();
+        detailsPage.verifyHistoricalDataWasPublishedWithSuccess();
     }
 }

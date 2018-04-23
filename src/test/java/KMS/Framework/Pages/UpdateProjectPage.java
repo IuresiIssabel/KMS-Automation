@@ -14,23 +14,29 @@ public class UpdateProjectPage extends WebDrivers {
         this.driver = driver;
     }
 
-    @FindBy(css = ".update-project-button")
-    private static WebElement updateProjectButton;
+    @FindBy(xpath = "//span[text()='Publish']")
+    private static WebElement publishButton;
 
-    @FindBy(css = "main > div > div > div > div > button:nth-child(2)")
-    private WebElement saveToHistoryButton;
+    @FindBy(xpath = "//span[text()='Save Draft']")
+    private WebElement saveDraftButton;
+
+    @FindBy(className = "update-project-button")
+    private WebElement updateProjectButton;
 
     public void clickOnUpdateProjectButton() {
-        longWait().until(ExpectedConditions.elementToBeClickable((WebElement) updateProjectButton));
+        longWait().until(ExpectedConditions.visibilityOf((WebElement) updateProjectButton));
         updateProjectButton.click();
     }
 
-    public void clickOnSaveToHistoryButton() {
-        AddNewProjectsPage addNewProjectsPage = PageFactory.initElements(driver, AddNewProjectsPage.class);
+    public void clickOnPublishProjectButton() {
+        longWait().until(ExpectedConditions.elementToBeClickable((WebElement) publishButton));
+        publishButton.click();
+    }
 
-        longWait().until(ExpectedConditions.visibilityOf((WebElement) saveToHistoryButton));
-        saveToHistoryButton.click();
-        addNewProjectsPage.clickOnSaveButton();
+    public void clickOnSaveDraftButton() {
+        longWait().until(ExpectedConditions.visibilityOf((WebElement) saveDraftButton));
+        saveDraftButton.click();
+        publishButton.click();
     }
 
     public void updateAProject(String newProjectName, String EM, String DoE, String client) {
@@ -38,7 +44,7 @@ public class UpdateProjectPage extends WebDrivers {
 
         addNewProjectsPage.completeProjectNameField(newProjectName);
         addNewProjectsPage.prefillAllProjectFields();
-        addNewProjectsPage.clickOnSaveButton();
+        clickOnPublishProjectButton();
     }
 
     public void updateAProjectAndCancelIt(String newProjectName, String EM, String DoE, String client) {

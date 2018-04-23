@@ -9,6 +9,9 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -113,6 +116,33 @@ public class ProjectDetailsPage extends WebDrivers {
     @FindBy(xpath = "(//div[text()='Security']/following-sibling::img[contains(@src, 'image/png')])[2]")
     private static WebElement dataHistorySecurityCommentsButton;
 
+    @FindBy(xpath = "//div[contains(./img/@src,'data:image')]//button")
+    protected static WebElement projectLogoButton;
+
+    @FindBy(xpath = "//div[contains(./img/@src,'data:image') and ./button]")
+    protected static WebElement projectLogoImage;
+
+    @FindBy(xpath = "//span[text()='Edit Project Logo']")
+    protected static WebElement projectLogoPopupTitle;
+
+    @FindBy(xpath = "(//span[text()='Drop files here, paste or '])[2]")
+    protected static WebElement projectLogoPopupDetails;
+
+    @FindBy(xpath = "(//span[text()='Drop files here, paste or ']/button)[2]")
+    protected static WebElement projectLogoPopupBrowseButton;
+
+    @FindBy(xpath = "//span[text()='CANCEL']")
+    protected static WebElement projectLogoPopupCancelButton;
+
+    @FindBy(xpath = "//span[text()='SAVE']")
+    protected static WebElement projectLogoPopupSaveButton;
+
+    @FindBy(xpath = "//a[text()='Add Historical Data']")
+    protected static WebElement addHistoricalDataButton;
+
+    @FindBy(name = "historical-date")
+    private static WebElement historicalDataInput;
+
     public void clickOnProjectDetailsButton() {
         longWait().until(ExpectedConditions.elementToBeClickable((WebElement) projectDetailsButton));
         projectDetailsButton.click();
@@ -123,26 +153,28 @@ public class ProjectDetailsPage extends WebDrivers {
         dataHistoryDetailsBtn.click();
     }
 
+    public void clickOnProjectLogoButton() {
+        longWait().until(ExpectedConditions.visibilityOf((WebElement) projectLogoButton));
+        projectLogoButton.click();
+    }
+
+    public void clickOnAddHistoricalDataButton() {
+        longWait().until(ExpectedConditions.elementToBeClickable((WebElement) addHistoricalDataButton));
+        addHistoricalDataButton.click();
+    }
+
     public void verifyDataHistoryColumnHeader() {
         longWait().until(ExpectedConditions.visibilityOf((WebElement) dataHistoryDayColumn));
         HashMap<WebElement, String> dataHistoryColumnHeaders = new HashMap<>();
 
-        dataHistoryColumnHeaders.put
-                (dataHistoryDayColumnHeader, data.getColumn1());
-        dataHistoryColumnHeaders.put
-                (dataHistoryOverallScoreColumnHeader, data.getColumn2());
-        dataHistoryColumnHeaders.put
-                (dataHistoryStabilityColumnHeader, data.getColumn3());
-        dataHistoryColumnHeaders.put
-                (dataHistoryMaintenanceColumnHeader, data.getMetricTitle1());
-        dataHistoryColumnHeaders.put
-                (dataHistoryDeliveryEfficiencyColumnHeader, data.getMetricTitle2());
-        dataHistoryColumnHeaders.put
-                (dataHistoryPerformanceColumnHeader, data.getMetricTitle3());
-        dataHistoryColumnHeaders.put
-                (dataHistorySecurityColumnHeader, data.getMetricTitle4());
-        dataHistoryColumnHeaders.put
-                (dataHistoryOptionsColumn, data.getMetricTitle5());
+        dataHistoryColumnHeaders.put(dataHistoryDayColumnHeader, data.getColumn1());
+        dataHistoryColumnHeaders.put(dataHistoryOverallScoreColumnHeader, data.getColumn2());
+        dataHistoryColumnHeaders.put(dataHistoryStabilityColumnHeader, data.getMetricTitle1());
+        dataHistoryColumnHeaders.put(dataHistoryMaintenanceColumnHeader, data.getMetricTitle2());
+        dataHistoryColumnHeaders.put(dataHistoryDeliveryEfficiencyColumnHeader, data.getMetricTitle3());
+        dataHistoryColumnHeaders.put(dataHistoryPerformanceColumnHeader, data.getMetricTitle4());
+        dataHistoryColumnHeaders.put(dataHistorySecurityColumnHeader, data.getMetricTitle5());
+        dataHistoryColumnHeaders.put(dataHistoryOptionsColumn, data.getColumn3());
 
         for (Map.Entry<WebElement, String> entry : dataHistoryColumnHeaders.entrySet()) {
             assertTrue(entry.getKey().isDisplayed());
@@ -214,5 +246,65 @@ public class ProjectDetailsPage extends WebDrivers {
             projectPage.verifyMetricComments();
             projectPage.closteCommentsTab.click();
         }
+    }
+
+    public void verifyProjectLogo() {
+        longWait().until(ExpectedConditions.visibilityOf((WebElement) projectLogoButton));
+        assertTrue(projectLogoImage.isDisplayed());
+        assertTrue(projectLogoButton.isDisplayed());
+    }
+
+    public void verifyProjectLogoPopupElements() {
+        longWait().until(ExpectedConditions.visibilityOf((WebElement) projectLogoPopupBrowseButton));
+
+        WebElement[] logoPopupElements = {projectLogoPopupTitle, projectLogoPopupDetails, projectLogoPopupBrowseButton,
+                projectLogoPopupCancelButton, projectLogoPopupSaveButton};
+
+        for (WebElement popupElements : logoPopupElements) {
+            assertTrue(popupElements.isDisplayed());
+        }
+    }
+
+    public void verifyTheProjectWasPlublishedWithSuccesInDataHistory() {
+        ProjectDetailsPage detailsPage = PageFactory.initElements(driver, ProjectDetailsPage.class);
+        ProjectPage projectPage = PageFactory.initElements(driver, ProjectPage.class);
+        UpdateProjectPage updateProjectPage = PageFactory.initElements(driver, UpdateProjectPage.class);
+
+        longWait().until(ExpectedConditions.visibilityOf((WebElement) dataHistoryDetailsBtn));
+        int numberOfElementsFoundAfter = driver.findElements(By.xpath((("//span[text()='Detail']")))).size();
+        projectPage.clickOnProjectsTab();
+        projectPage.searchForAProject(data.getKmsAutoProjectName());
+        updateProjectPage.clickOnUpdateProjectButton();
+        updateProjectPage.clickOnPublishProjectButton();
+        projectPage.searchForAProject(data.getKmsAutoProjectName());
+        detailsPage.clickOnProjectDetailsButton();
+        longWait().until(ExpectedConditions.visibilityOf((WebElement) dataHistoryDetailsBtn));
+        int numberOfElementsFoundBefore = driver.findElements(By.xpath((("//span[text()='Detail']")))).size();
+        assert numberOfElementsFoundBefore > numberOfElementsFoundAfter;
+    }
+
+    public void verifyHistoricalDataWasPublishedWithSuccess() {
+        ProjectDetailsPage detailsPage = PageFactory.initElements(driver, ProjectDetailsPage.class);
+        ProjectPage projectPage = PageFactory.initElements(driver, ProjectPage.class);
+        UpdateProjectPage updateProjectPage = PageFactory.initElements(driver, UpdateProjectPage.class);
+
+        longWait().until(ExpectedConditions.visibilityOf((WebElement) dataHistoryDetailsBtn));
+        int numberOfElementsFoundAfter = driver.findElements(By.xpath((("//span[text()='Detail']")))).size();
+
+        clickOnAddHistoricalDataButton();
+        longWait().until(ExpectedConditions.visibilityOf((WebElement) historicalDataInput));
+        DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+        Date date = new Date();
+        String myPCDate = dateFormat.format(date);
+        historicalDataInput.sendKeys(myPCDate);
+        updateProjectPage.updateAProject(
+                data.getKmsAutoProjectName(), data.getEMField2(), data.getDoEField2(), data.getClientField2());
+
+        projectPage.searchForAProject(data.getKmsAutoProjectName());
+        detailsPage.clickOnProjectDetailsButton();
+
+        longWait().until(ExpectedConditions.visibilityOf((WebElement) dataHistoryDetailsBtn));
+        int numberOfElementsFoundBefore = driver.findElements(By.xpath((("//span[text()='Detail']")))).size();
+        assert numberOfElementsFoundBefore > numberOfElementsFoundAfter;
     }
 }
