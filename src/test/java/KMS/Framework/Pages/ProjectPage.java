@@ -21,7 +21,7 @@ public class ProjectPage extends WebDrivers {
     }
 
     @FindBy(css = ".search-button")
-    protected static WebElement searchButton;
+    public static WebElement searchButton;
 
     @FindBy(css = "[name='search']")
     protected static WebElement searchField;
