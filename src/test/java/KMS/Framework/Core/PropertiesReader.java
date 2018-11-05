@@ -6,7 +6,7 @@ import java.util.Properties;
 
 public class PropertiesReader {
     private Properties prop;
-    private String INPUT_FILE_PATH = "./general.properties";
+    private String INPUT_FILE_PATH = "config.properties";
     private InputStream input = PropertiesReader.class.getClassLoader().getResourceAsStream(INPUT_FILE_PATH);
 
     public PropertiesReader() {
@@ -24,6 +24,10 @@ public class PropertiesReader {
 
     public String getPassword() {
         return prop.getProperty("password");
+    }
+
+    public String getPropertyValue(String property) {
+        return prop.getProperty(property);
     }
 
     public String getBaseUrl() {

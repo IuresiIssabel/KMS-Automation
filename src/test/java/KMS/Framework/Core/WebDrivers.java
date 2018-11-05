@@ -1,5 +1,6 @@
 package KMS.Framework.Core;
 
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeDriverService;
@@ -10,6 +11,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.*;
 
 public class WebDrivers {
@@ -20,45 +23,29 @@ public class WebDrivers {
     protected static final ThreadLocal<RemoteWebDriver> THREAD_LOCAL_DRIVER = new InheritableThreadLocal<>();
     private static final ThreadLocal<WebDriverWait> THREAD_LOCAL_FIND_WAIT = new InheritableThreadLocal<>();
     protected static final ThreadLocal<WebDriverWait> THREAD_LOCAL_LONG_WAIT = new InheritableThreadLocal<>();
-    private static ChromeDriverService chromeService;
-    protected String browser;
-    private static final ThreadLocal<String> WINDOW_HANDLE = new InheritableThreadLocal<>();
 
     public WebDrivers() {
         data = new PropertiesReader();
     }
 
-    private void startChromeService() {
-        if (chromeService == null) {
-            chromeService = new ChromeDriverService.Builder()
-                    .usingDriverExecutable(new File(System.getProperty("webdriver.chrome.driver")))
-                    .usingAnyFreePort()
-                    .build();
-            try {
-                chromeService.start();
-            } catch (IOException e) {
-                e.printStackTrace();
-                System.exit(1);
-            }
-        }
-    }
-
     protected void rootInit() {
-        browser = System.getProperty("browser");
-        initDriverPaths();
-        startChromeService();
-        Map<String, Object> prefs = new HashMap<String, Object>();
-        prefs.put("profile.default_content_setting_values.notifications", 2);
-        ChromeOptions options = new ChromeOptions();
-        options.setExperimentalOption("prefs", prefs);
-        driver = new ChromeDriver(options);
-        driver.manage().window().maximize();
-        DesiredCapabilities dc = DesiredCapabilities.chrome();
-        dc.setCapability(ChromeOptions.CAPABILITY, options);
+        DesiredCapabilities capabilities;
+        if (data.getPropertyValue("browser").equals("chrome")) {
+            capabilities = DesiredCapabilities.chrome();
+        } else {
+            capabilities = DesiredCapabilities.firefox();
+        }
+        try {
+            driver = new RemoteWebDriver(
+                    new URL(data.getPropertyValue("selServer")),
+                    capabilities);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        driver.manage().window().setSize(new Dimension(1600,900));
         WebDriverWait findWait, longWait;
         findWait = new WebDriverWait(driver, FIND_WAIT);
         longWait = new WebDriverWait(driver, LONG_WAIT);
-        WINDOW_HANDLE.set(null);
         THREAD_LOCAL_DRIVER.set((RemoteWebDriver) driver);
         THREAD_LOCAL_FIND_WAIT.set(findWait);
         THREAD_LOCAL_LONG_WAIT.set(longWait);
@@ -73,13 +60,6 @@ public class WebDrivers {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    private void initDriverPaths() {
-        String chromedriverPath = "src/test/resources/chromedriver.exe";
-        String geckodriverPath = "src/test/resources/geckodriver.exe";
-        System.setProperty("webdriver.gecko.driver", geckodriverPath);
-        System.setProperty("webdriver.chrome.driver", chromedriverPath);
     }
 
     public RemoteWebDriver getDriver() {

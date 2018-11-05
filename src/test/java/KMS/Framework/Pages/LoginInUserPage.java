@@ -21,8 +21,11 @@ public class LoginInUserPage extends WebDrivers {
     @FindBy(css = "[name='password'")
     private WebElement passwordField;
 
-    @FindBy(xpath = "//div[@role='button']//span[text()='Next']")
+    @FindBy(id = "identifierNext")
     private WebElement nextButton;
+
+    @FindBy(id = "passwordNext")
+    private WebElement passwordButton;
 
     public void clickOnSignInButton() {
         signInButton.click();
@@ -45,7 +48,7 @@ public class LoginInUserPage extends WebDrivers {
         passwordField.sendKeys(data.getPassword());
         try {
             Thread.sleep(1000);
-            nextButton.click();
+            passwordButton.click();
             Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
